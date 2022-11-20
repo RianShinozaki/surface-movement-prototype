@@ -15,9 +15,15 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public float boostSpeed;
     [FoldoutGroup("Movement Params")] public float accelSpeed;
     [FoldoutGroup("Movement Params")] public float decelSpeed;
+    [FoldoutGroup("Movement Params")] public float accelSpeedinAir;
+    [FoldoutGroup("Movement Params")] public float decelSpeedinAir;
+
+
     [FoldoutGroup("Movement Params")] public float steeringCoefficient;
+    [FoldoutGroup("Movement Params")] public float steeringCoefficientinAir;
     [FoldoutGroup("Movement Params")] public float fastSpeedKeepCoefficient;        //How well you get to keep your speed if you're running faster than topspeed;
     [FoldoutGroup("Movement Params")] public float fastSpeedDecel;                  //How well you get to keep your speed if you're running faster than topspeed; NOT USED CURRENTLY
+    [FoldoutGroup("Movement Params")] public float jumpForce;
     [FoldoutGroup("Movement Params")] public MovementType movementType;             //How fast you lose speed if past topspeed
     #endregion
 
@@ -54,7 +60,13 @@ public class PlayerController : CustomPhysicsObject
                     float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                     float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
 
-                    groundSpeed = Vector2.MoveTowards(groundSpeed, new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * 999, Mathf.Clamp((Speed * steeringCoefficient + accelSpeed), 0, fastSpeedDecel-1) * Time.deltaTime);
+                    Vector2 inputVec    = new Vector2(Mathf.Sin(correctedInputDirection), Mathf.Cos(correctedInputDirection));
+                    float steer         = (grounded ? steeringCoefficient : steeringCoefficientinAir);
+                    float accelForce    = (grounded ? accelSpeed : accelSpeedinAir);
+                    float accelCap      = fastSpeedDecel - 1;
+                    float accelTotal    = Mathf.Clamp((Speed * steer + accelForce), 0, accelCap);
+                    groundSpeed = Vector2.MoveTowards(groundSpeed, inputVec * 999, accelTotal * Time.deltaTime);
+
                     if(Speed > topSpeed) {
                         groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, fastSpeedDecel * Time.deltaTime);
 
@@ -64,11 +76,16 @@ public class PlayerController : CustomPhysicsObject
                 }
                 else {
                     Debug.Log("Stop");
-                    groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, decelSpeed * Time.deltaTime);
+                    groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, (grounded ? decelSpeed : decelSpeedinAir ) * Time.deltaTime);
                 }
+                
                 if (grounded && Input.GetButtonDown("Fire1")) {
                     grounded = false;
-                    verticalSpeed = 5;
+
+                    Vector3 jumpVector = new Vector3(Vector3.Dot(upDirection, Vector3.right), Vector3.Dot(upDirection, Vector3.up), Vector3.Dot(upDirection, Vector3.forward));
+                    groundSpeed += new Vector2(jumpVector.x, jumpVector.z) * jumpForce;
+                    verticalSpeed += jumpVector.y * jumpForce;
+
                 }
                 if (Input.GetButtonDown("Fire2")) {
                     groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * boostSpeed;

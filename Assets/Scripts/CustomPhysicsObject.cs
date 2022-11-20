@@ -9,27 +9,29 @@ public class CustomPhysicsObject : MonoBehaviour
     public SphereCollider coll;
     public Camera cam;
 
-    public bool grounded;
-
     #region physics parameters
     [FoldoutGroup("Physics Params")] public float gravity;
     [FoldoutGroup("Physics Params")] public float slopeInfluence;
     [FoldoutGroup("Physics Params")] public float rayCastRadius;                    //How far around the player origin to create raycasts
     [FoldoutGroup("Physics Params")] public float airRaycastDist;                   //How far down to check for ground collisions in air
     [FoldoutGroup("Physics Params")] public float groundRaycastDist;                //How far down to check for ground collisions on the ground
+    [FoldoutGroup("Physics Params")] public float slopeResistFromSpeedCoefficient;    //Being faster makes slopes affect you this much less
+    [FoldoutGroup("Physics Params")] public float normalLerpSpeed;                    //Speed of the smoothening when changing normals
     [FoldoutGroup("Physics Params")] public LayerMask environmentMask;
     #endregion
 
     #region physics variables
+    [FoldoutGroup("Physics Vars")] public bool grounded;
+    [FoldoutGroup("Physics Vars")] public bool groundedLast;
     [FoldoutGroup("Physics Vars")] public Vector2 groundSpeed;                      //Speed along the normal
     [FoldoutGroup("Physics Vars")] public float verticalSpeed;                      //Speed up and down
     [FoldoutGroup("Physics Vars")] public float flatDirection;                      //Direction along the normal
     [FoldoutGroup("Physics Vars")] public Vector3 upDirection;                      //The current normal (or straight up if in the air)
+    [FoldoutGroup("Physics Vars")] public Vector3 upDirectionLast;                      //The current normal (or straight up if in the air)
     [FoldoutGroup("Physics Vars")] public float groundSlopeAngle;                   //The angle from upwards vector of the ground in degrees
     [FoldoutGroup("Physics Vars")] public float groundSlopePoint;                   //The angle the ground points in radians
     [FoldoutGroup("Physics Vars")] public Vector3 groundSlopeDir;                   //A vector of the direction the ground points
-    [FoldoutGroup("Physics Vars")] public float normalLerpSpeed;                    //Speed of the smoothening when changing normals
-    [FoldoutGroup("Physics Vars")] public float slopeResistFromSpeedCoefficient;    //Being faster makes slopes affect you this much less
+    
     #endregion
 
     public float Speed {
@@ -100,7 +102,22 @@ public class CustomPhysicsObject : MonoBehaviour
         
 
         Debug.Log(foundGround);
+        
         grounded = foundGround;
+
+        if (grounded != groundedLast) {
+            Quaternion rot = transform.rotation;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.FromToRotation(transform.up, upDirectionLast) * transform.rotation;
+            Vector3 speedVec = transform.TransformDirection(new Vector3(groundSpeed.x, verticalSpeed, groundSpeed.y));
+
+            //groundSpeed = new Vector2(speedVec.x, speedVec.z);
+            //verticalSpeed = speedVec.y;
+
+            transform.rotation = rot;
+            groundedLast = grounded;
+            upDirectionLast = upDirection;
+        }
 
         if (grounded) {
             verticalSpeed = 0;
@@ -114,7 +131,7 @@ public class CustomPhysicsObject : MonoBehaviour
             avgNormal /= hitNum;
             upDirection = Vector3.Slerp(upDirection, avgNormal, normalLerpSpeed);
 
-            groundSlopeAngle = Vector3.Angle(avgNormal, Vector3.up);
+            groundSlopeAngle = Vector3.Angle(avgNormal, Vector3.up) * Mathf.Sign(avgNormal.y);
             Vector3 temp = Vector3.Cross(avgNormal, Vector3.down);
             groundSlopeDir = Vector3.Cross(temp, avgNormal);
             groundSlopePoint = Mathf.Atan2(groundSlopeDir.x, groundSlopeDir.z);
@@ -126,14 +143,19 @@ public class CustomPhysicsObject : MonoBehaviour
             else {
                 groundSlopeDir = Vector3.forward;
                 verticalSpeed += gravity * Time.fixedDeltaTime;
-                upDirection = Vector3.Slerp(upDirection, Vector3.up, normalLerpSpeed);
+                upDirection = Vector3.up;
             }
         }
+
         
 
-        transform.rotation = Quaternion.Euler(0, flatDirection * Mathf.Deg2Rad, 0);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;
-        transform.position += transform.TransformDirection(new Vector3(groundSpeed.x, verticalSpeed, groundSpeed.y)) * Time.fixedDeltaTime ;
+        transform.position += transform.TransformDirection(new Vector3(groundSpeed.x, verticalSpeed, groundSpeed.y)) * Time.fixedDeltaTime;
+
+        transform.rotation = Quaternion.Euler(0, flatDirection * Mathf.Rad2Deg, 0);
+        transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;
+        
     }
 
     public void OnDrawGizmos() {
