@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class CustomPhysicsObject : MonoBehaviour
 {
@@ -11,26 +12,31 @@ public class CustomPhysicsObject : MonoBehaviour
     public bool grounded;
 
     #region physics parameters
-    public float gravity;
-    public float rayCastRadius;         //How far around the player origin to create raycasts
-    public float airRaycastDist;        //How far down to check for ground collisions in air
-    public float groundRaycastDist;     //How far down to check for ground collisions on the ground
-    public LayerMask environmentMask;
+    [FoldoutGroup("Physics Params")] public float gravity;
+    [FoldoutGroup("Physics Params")] public float slopeInfluence;
+    [FoldoutGroup("Physics Params")] public float rayCastRadius;                    //How far around the player origin to create raycasts
+    [FoldoutGroup("Physics Params")] public float airRaycastDist;                   //How far down to check for ground collisions in air
+    [FoldoutGroup("Physics Params")] public float groundRaycastDist;                //How far down to check for ground collisions on the ground
+    [FoldoutGroup("Physics Params")] public LayerMask environmentMask;
     #endregion
 
     #region physics variables
-    public Vector2 groundSpeed;
-    public float verticalSpeed;
-    public float flatDirection;
-    public Vector3 upDirection;
-    float groundSlopeAngle;
-    Vector3 groundSlopeDir;
-    public float normalLerpSpeed;
+    [FoldoutGroup("Physics Vars")] public Vector2 groundSpeed;                      //Speed along the normal
+    [FoldoutGroup("Physics Vars")] public float verticalSpeed;                      //Speed up and down
+    [FoldoutGroup("Physics Vars")] public float flatDirection;                      //Direction along the normal
+    [FoldoutGroup("Physics Vars")] public Vector3 upDirection;                      //The current normal (or straight up if in the air)
+    [FoldoutGroup("Physics Vars")] public float groundSlopeAngle;                   //The angle from upwards vector of the ground in degrees
+    [FoldoutGroup("Physics Vars")] public float groundSlopePoint;                   //The angle the ground points in radians
+    [FoldoutGroup("Physics Vars")] public Vector3 groundSlopeDir;                   //A vector of the direction the ground points
+    [FoldoutGroup("Physics Vars")] public float normalLerpSpeed;                    //Speed of the smoothening when changing normals
+    [FoldoutGroup("Physics Vars")] public float slopeResistFromSpeedCoefficient;    //Being faster makes slopes affect you this much less
     #endregion
 
-    #region movement parameters
-
-    #endregion
+    public float Speed {
+        get {
+            return groundSpeed.magnitude;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -111,6 +117,8 @@ public class CustomPhysicsObject : MonoBehaviour
             groundSlopeAngle = Vector3.Angle(avgNormal, Vector3.up);
             Vector3 temp = Vector3.Cross(avgNormal, Vector3.down);
             groundSlopeDir = Vector3.Cross(temp, avgNormal);
+            groundSlopePoint = Mathf.Atan2(groundSlopeDir.x, groundSlopeDir.z);
+            groundSpeed += new Vector2( Mathf.Sin( groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Deg2Rad) * Time.deltaTime * slopeInfluence / (Speed * slopeResistFromSpeedCoefficient + 1);
 
         }
         else {
@@ -121,20 +129,7 @@ public class CustomPhysicsObject : MonoBehaviour
                 upDirection = Vector3.Slerp(upDirection, Vector3.up, normalLerpSpeed);
             }
         }
-        float inputMagnitude = Mathf.Clamp(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).magnitude, 0, 1);
-        if (inputMagnitude > 0) {
-            float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
-            flatDirection = correctedInputDirection;
-
-            groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * 3;
-        } else {
-            groundSpeed = Vector2.zero;
-        }
-        if(grounded && Input.GetButtonDown("Fire1")) {
-            grounded = false;
-            verticalSpeed = 5;
-        }
+        
 
         transform.rotation = Quaternion.Euler(0, flatDirection * Mathf.Deg2Rad, 0);
         transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;
