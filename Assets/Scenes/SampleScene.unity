@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28502667, g: 0.37139323, b: 0.49600998, a: 1}
+  m_IndirectSpecularColor: {r: 0.15201652, g: 0.21243915, b: 0.26719028, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -214,8 +214,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45427460}
   m_LocalRotation: {x: -0.8821633, y: -0, z: -0, w: 0.47094384}
-  m_LocalPosition: {x: -0.17, y: 5.6563497, z: 6.6005545}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalPosition: {x: -0.17, y: 5.6563497, z: 6.600554}
+  m_LocalScale: {x: 0.22545879, y: 1.0000005, z: 0.44918022}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -313,7 +313,7 @@ Transform:
   m_GameObject: {fileID: 57751378}
   m_LocalRotation: {x: -0.374752, y: -0, z: -0, w: 0.9271251}
   m_LocalPosition: {x: -0.17, y: 0.37, z: 5.11}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalScale: {x: 0.22545879, y: 0.9999999, z: 0.44918004}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -616,7 +616,7 @@ Transform:
   m_GameObject: {fileID: 615349585}
   m_LocalRotation: {x: -0.7933489, y: -0, z: -0, w: 0.6087673}
   m_LocalPosition: {x: -0.17, y: 4.796672, z: 6.8308916}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalScale: {x: 0.22545879, y: 1.0000004, z: 0.44918013}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -714,7 +714,7 @@ Transform:
   m_GameObject: {fileID: 648353996}
   m_LocalRotation: {x: 0.000010609627, y: 0.5510586, z: -0.83446664, w: 0.000006943941}
   m_LocalPosition: {x: 4.339963, y: 4.61, z: 4.311266}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalScale: {x: 0.22545889, y: 1.0000004, z: 0.44918007}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -811,8 +811,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729241631}
   m_LocalRotation: {x: 0.000012487173, y: 0.09754415, z: -0.9952313, w: 0.0000012284145}
-  m_LocalPosition: {x: 4.340005, y: 6.33, z: 2.5212665}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalPosition: {x: 4.340005, y: 6.33, z: 2.5212662}
+  m_LocalScale: {x: 0.22545889, y: 1.0000007, z: 0.44917998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1290,7 +1290,7 @@ Transform:
   m_GameObject: {fileID: 1153732245}
   m_LocalRotation: {x: -0.9995537, y: -0, z: -0, w: 0.029876143}
   m_LocalPosition: {x: -0.17, y: 7.98, z: 4.57}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalScale: {x: 0.22545879, y: 1.0000005, z: 0.44918022}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1309,9 +1309,10 @@ GameObject:
   - component: {fileID: 1219943514}
   - component: {fileID: 1219943513}
   - component: {fileID: 1219943517}
+  - component: {fileID: 1219943518}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1407,16 +1408,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219943512}
-  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: -0, y: 2, z: -5.75}
+  m_LocalRotation: {x: -0.14048432, y: 0.5788555, z: -0.10206783, w: -0.7967262}
+  m_LocalPosition: {x: 4.98064, y: 4.9, z: -0.26779127}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 134115543}
   - {fileID: 850328866}
   - {fileID: 1112186809}
-  m_Father: {fileID: 1948979706}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
 --- !u!114 &1219943517
 MonoBehaviour:
@@ -1522,6 +1523,31 @@ MonoBehaviour:
   - {fileID: 134115542}
   - {fileID: 850328865}
   - {fileID: 1112186808}
+--- !u!114 &1219943518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219943512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da862f6a3ad61334aae68294036536aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rewiredInputManager: {fileID: 1980749553}
+  _absoluteAxisSensitivity: 30
+  _scaleAbsoluteAxesToScreen: 0
+  _runInEditMode: 0
+  _playerMappings:
+  - _playerId: 0
+    _actionMappings:
+    - _cinemachineAxis: Mouse X
+      _rewiredActionName: Mouse X
+      _rewiredActionId: -1
+    - _cinemachineAxis: Mouse Y
+      _rewiredActionName: Mouse Y
+      _rewiredActionId: -1
 --- !u!1 &1404256848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,8 +1723,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430444541}
   m_LocalRotation: {x: 0.0000056885183, y: 0.8922294, z: -0.45158252, w: 0.000011228025}
-  m_LocalPosition: {x: 4.3399763, y: 1.18, z: 3.7112653}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalPosition: {x: 4.3399763, y: 1.18, z: 3.711265}
+  m_LocalScale: {x: 0.22545879, y: 0.99999994, z: 0.44918}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1794,9 +1820,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448551304}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.17, y: 0.14, z: 2.86}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.17, y: 0.14, z: 2.8599997}
+  m_LocalScale: {x: 0.22545879, y: 1, z: 0.44917998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1894,7 +1920,7 @@ Transform:
   m_GameObject: {fileID: 1463019530}
   m_LocalRotation: {x: -0.9636704, y: -0, z: -0, w: 0.26709455}
   m_LocalPosition: {x: -0.17, y: 6.910488, z: 6.026416}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalScale: {x: 0.22545879, y: 1.0000002, z: 0.4491801}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2398,8 +2424,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835291772}
   m_LocalRotation: {x: -0.58479345, y: -0, z: -0, w: 0.81118226}
-  m_LocalPosition: {x: -0.17, y: 1.5, z: 6.52}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalPosition: {x: -0.17, y: 1.5, z: 6.5199995}
+  m_LocalScale: {x: 0.22545879, y: 1.0000001, z: 0.44918004}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2496,8 +2522,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862263261}
   m_LocalRotation: {x: -0.16340953, y: -0, z: -0, w: 0.9865584}
-  m_LocalPosition: {x: -0.17, y: 0.14, z: 3.75}
-  m_LocalScale: {x: 0.22545877, y: 1, z: 0.44918}
+  m_LocalPosition: {x: -0.17, y: 0.14, z: 3.7499995}
+  m_LocalScale: {x: 0.22545879, y: 1, z: 0.44918007}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2551,7 +2577,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1404256849}
-  - {fileID: 1219943516}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 288, z: 0}
@@ -2596,6 +2621,313 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.4
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!1 &1980749552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1980749554}
+  - component: {fileID: 1980749553}
+  m_Layer: 0
+  m_Name: Rewired Input Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1980749553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980749552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581b3e3c96df0ef42aef16b63b27b87f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 1
+  _userData:
+    configVars:
+      updateLoop: 1
+      alwaysUseUnityInput: 0
+      windowsStandalonePrimaryInputSource: 0
+      osx_primaryInputSource: 0
+      linux_primaryInputSource: 0
+      windowsUWP_primaryInputSource: 0
+      xboxOne_primaryInputSource: 0
+      gameCoreXboxOne_primaryInputSource: 0
+      gameCoreScarlett_primaryInputSource: 0
+      ps4_primaryInputSource: 0
+      ps5_primaryInputSource: 0
+      webGL_primaryInputSource: 0
+      stadia_primaryInputSource: 0
+      useXInput: 1
+      useNativeMouse: 1
+      useEnhancedDeviceSupport: 1
+      windowsStandalone_useSteamRawInputControllerWorkaround: 0
+      osxStandalone_useEnhancedDeviceSupport: 1
+      android_supportUnknownGamepads: 1
+      ps4_assignJoysticksByPS4JoyId: 1
+      useSteamControllerSupport: 1
+      logToScreen: 0
+      runInEditMode: 0
+      allowInputInEditorSceneView: 0
+      platformVars_windowsStandalone:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+        useNativeKeyboard: 1
+        joystickRefreshRate: 240
+      platformVars_linuxStandalone:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_osxStandalone:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+        useAppleGameController: 1
+        assignJoysticksByUserId: 0
+      platformVars_windowsUWP:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+        useGamepadAPI: 1
+        useHIDAPI: 1
+      platformVars_iOS:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_tvOS:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_android:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_ps4:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_ps5:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+        assignJoysticksByPS5JoyId: 1
+      platformVars_psVita:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_xboxOne:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_gameCoreXboxOne:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+        assignJoysticksByUserId: 0
+      platformVars_gameCoreScarlett:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+        assignJoysticksByUserId: 0
+      platformVars_switch:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_webGL:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+      platformVars_stadia:
+        disableKeyboard: 0
+        disableMouse: 0
+        ignoreInputWhenAppNotInFocus: 1
+        useNativeKeyboard: 1
+        useNativeMouse: 1
+      maxJoysticksPerPlayer: 1
+      autoAssignJoysticks: 1
+      assignJoysticksToPlayingPlayersOnly: 0
+      distributeJoysticksEvenly: 1
+      reassignJoystickToPreviousOwnerOnReconnect: 1
+      defaultJoystickAxis2DDeadZoneType: 1
+      defaultJoystickAxis2DSensitivityType: 0
+      defaultAxisSensitivityType: 0
+      force4WayHats: 0
+      throttleCalibrationMode: 0
+      activateActionButtonsOnNegativeValue: 0
+      deferControllerConnectedEventsOnStart: 0
+      logLevel: 7
+      editorSettings:
+        exportConsts_useParentClass: 0
+        exportConsts_parentClassName: RewiredConsts
+        exportConsts_useNamespace: 1
+        exportConsts_namespace: RewiredConsts
+        exportConsts_actions: 1
+        exportConsts_actionsClassName: Action
+        exportConsts_actionsIncludeActionCategory: 0
+        exportConsts_actionsCreateClassesForActionCategories: 0
+        exportConsts_mapCategories: 1
+        exportConsts_mapCategoriesClassName: Category
+        exportConsts_layouts: 1
+        exportConsts_layoutsClassName: Layout
+        exportConsts_players: 1
+        exportConsts_playersClassName: Player
+        exportConsts_inputBehaviors: 0
+        exportConsts_inputBehaviorsClassName: InputBehavior
+        exportConsts_customControllers: 1
+        exportConsts_customControllersClassName: CustomController
+        exportConsts_customControllersAxesClassName: Axis
+        exportConsts_customControllersButtonsClassName: Button
+        exportConsts_layoutManagerRuleSets: 1
+        exportConsts_layoutManagerRuleSetsClassName: LayoutManagerRuleSet
+        exportConsts_mapEnablerRuleSets: 1
+        exportConsts_mapEnablerRuleSetsClassName: MapEnablerRuleSet
+        exportConsts_allCapsConstantNames: 0
+    players:
+    - _id: 9999999
+      _name: System
+      _descriptiveName: System
+      _startPlaying: 1
+      _defaultJoystickMaps: []
+      _defaultMouseMaps: []
+      _defaultKeyboardMaps: []
+      _defaultCustomControllerMaps: []
+      _startingCustomControllers: []
+      _assignMouseOnStart: 1
+      _assignKeyboardOnStart: 1
+      _excludeFromControllerAutoAssignment: 1
+      _controllerMapLayoutManagerSettings:
+        _enabled: 1
+        _loadFromUserDataStore: 1
+        _ruleSets: []
+      _controllerMapEnablerSettings:
+        _enabled: 1
+        _ruleSets: []
+    - _id: 1
+      _name: Player0
+      _descriptiveName: Player0
+      _startPlaying: 1
+      _defaultJoystickMaps: []
+      _defaultMouseMaps: []
+      _defaultKeyboardMaps: []
+      _defaultCustomControllerMaps: []
+      _startingCustomControllers: []
+      _assignMouseOnStart: 1
+      _assignKeyboardOnStart: 1
+      _excludeFromControllerAutoAssignment: 0
+      _controllerMapLayoutManagerSettings:
+        _enabled: 1
+        _loadFromUserDataStore: 1
+        _ruleSets: []
+      _controllerMapEnablerSettings:
+        _enabled: 1
+        _ruleSets: []
+    actions: []
+    actionCategories:
+    - _name: Default
+      _descriptiveName: Default
+      _tag: 
+      _id: 0
+      _userAssignable: 1
+    actionCategoryMap:
+      list:
+      - categoryId: 0
+        actionIds: 
+    inputBehaviors:
+    - _id: 0
+      _name: Default
+      _joystickAxisSensitivity: 1
+      _digitalAxisSimulation: 1
+      _digitalAxisSnap: 1
+      _digitalAxisInstantReverse: 0
+      _digitalAxisGravity: 3
+      _digitalAxisSensitivity: 3
+      _mouseXYAxisMode: 0
+      _mouseOtherAxisMode: 0
+      _mouseXYAxisSensitivity: 1
+      _mouseXYAxisDeltaCalc: 0
+      _mouseOtherAxisSensitivity: 1
+      _customControllerAxisSensitivity: 1
+      _buttonDoublePressSpeed: 0.3
+      _buttonShortPressTime: 0.25
+      _buttonShortPressExpiresIn: 0
+      _buttonLongPressTime: 1
+      _buttonLongPressExpiresIn: 0
+      _buttonDeadZone: 0.5
+      _buttonDownBuffer: 0
+      _buttonRepeatRate: 30
+      _buttonRepeatDelay: 0
+    mapCategories:
+    - _name: Default
+      _descriptiveName: Default
+      _tag: 
+      _id: 0
+      _userAssignable: 1
+      _checkConflictsWithAllCategories: 1
+      _checkConflictsCategoryIds: 
+    joystickLayouts:
+    - _name: Default
+      _descriptiveName: Default
+      _id: 0
+    keyboardLayouts:
+    - _name: Default
+      _descriptiveName: Default
+      _id: 0
+    mouseLayouts:
+    - _name: Default
+      _descriptiveName: Default
+      _id: 0
+    customControllerLayouts:
+    - _name: Default
+      _descriptiveName: Default
+      _id: 0
+    joystickMaps: []
+    keyboardMaps: []
+    mouseMaps: []
+    customControllerMaps: []
+    customControllers: []
+    controllerMapLayoutManagerRuleSets: []
+    controllerMapEnablerRuleSets: []
+    playerIdCounter: 2
+    actionIdCounter: 0
+    actionCategoryIdCounter: 1
+    inputBehaviorIdCounter: 1
+    mapCategoryIdCounter: 1
+    joystickLayoutIdCounter: 1
+    keyboardLayoutIdCounter: 1
+    mouseLayoutIdCounter: 1
+    customControllerLayoutIdCounter: 1
+    joystickMapIdCounter: 0
+    keyboardMapIdCounter: 0
+    mouseMapIdCounter: 0
+    customControllerMapIdCounter: 0
+    customControllerIdCounter: 0
+    controllerMapLayoutManagerSetIdCounter: 0
+    controllerMapEnablerSetIdCounter: 0
+  _controllerDataFiles: {fileID: 11400000, guid: d21d2b20df8369642b76aafbb2576ba7, type: 2}
+--- !u!4 &1980749554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980749552}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2138677391
 GameObject:
   m_ObjectHideFlags: 0
