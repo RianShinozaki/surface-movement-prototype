@@ -3,23 +3,24 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Environment
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Player Hitbox
+  - Player Hurtbox
+  - Enemy
+  - Enemy Hitbox
+  - Enemy Hurtbox
+  - Stage Object
+  - Pickup
+  - Hazard
   - 
   - 
   - 
