@@ -30,7 +30,8 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public float fastSpeedKeepCoefficient;        //How well you get to keep your speed if you're running faster than topspeed //NOT USED
     [FoldoutGroup("Movement Params")] public float fastSpeedDecel;                  //How fast you lose speed if past topspeed
     [FoldoutGroup("Movement Params")] public float jumpForce;
-    [FoldoutGroup("Movement Params")] public MovementType movementType;             
+    [FoldoutGroup("Movement Params")] public MovementType movementType;
+    [FoldoutGroup("Movement Params")] public bool relativeToCamera = true;
     #endregion
 
     void Start()
@@ -47,7 +48,6 @@ public class PlayerController : CustomPhysicsObject
                     float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                     float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
                     flatDirection = correctedInputDirection;
-
                     groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * 3;
                 }
                 else {
@@ -110,5 +110,9 @@ public class PlayerController : CustomPhysicsObject
                 }
                 break;
         }
+    }
+
+    public void SetRelativeCameraMovement(bool set) {
+        relativeToCamera = set;
     }
 }
