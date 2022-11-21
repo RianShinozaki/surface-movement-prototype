@@ -87,7 +87,7 @@ public class PlayerController : CustomPhysicsObject
                     Vector3 jumpVector = new Vector3(Vector3.Dot(upDirection, Vector3.right), Vector3.Dot(upDirection, Vector3.up), Vector3.Dot(upDirection, Vector3.forward));
                     groundSpeed = new Vector2(jumpVector.x, jumpVector.z) * jumpForce;
                     verticalSpeed = jumpVector.y * jumpForce;
-                    upDirection = Vector3.up;
+                    //upDirection = Vector3.up;
                     keepSpeedCache = true;
 
                 }

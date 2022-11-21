@@ -15,8 +15,9 @@ public class CustomPhysicsObject : MonoBehaviour
     [FoldoutGroup("Physics Params")] public float rayCastRadius;                    //How far around the player origin to create raycasts
     [FoldoutGroup("Physics Params")] public float airRaycastDist;                   //How far down to check for ground collisions in air
     [FoldoutGroup("Physics Params")] public float groundRaycastDist;                //How far down to check for ground collisions on the ground
-    [FoldoutGroup("Physics Params")] public float slopeResistFromSpeedCoefficient;    //Being faster makes slopes affect you this much less
-    [FoldoutGroup("Physics Params")] public float normalLerpSpeed;                    //Speed of the smoothening when changing normals
+    [FoldoutGroup("Physics Params")] public float slopeResistFromSpeedCoefficient;  //Being faster makes slopes affect you this much less
+    [FoldoutGroup("Physics Params")] public float normalLerpSpeed;                  //Speed of the smoothening when changing normals
+    [FoldoutGroup("Physics Params")] public float slopeFalloffSpeed;                //Minimum speed to stay on 90 degree or greater slopes
     [FoldoutGroup("Physics Params")] public LayerMask environmentMask;
     #endregion
 
@@ -35,6 +36,7 @@ public class CustomPhysicsObject : MonoBehaviour
     [FoldoutGroup("Physics Vars")] public float groundSlopePoint;                   //The angle the ground points in radians
     [FoldoutGroup("Physics Vars")] public Vector3 groundSlopeDir;                   //A vector of the direction the ground points
     [FoldoutGroup("Physics Vars")] public bool keepSpeedCache;                      //Whether or not to reset speed when leaving a surface
+    [FoldoutGroup("Physics Vars")] public Quaternion visualRotation;                //Visible rotation
     
     #endregion
 
@@ -54,6 +56,10 @@ public class CustomPhysicsObject : MonoBehaviour
     // Update is called once per frame
     public virtual void FixedUpdate()
     {
+
+        transform.rotation = Quaternion.Euler(0, flatDirection * Mathf.Rad2Deg, 0);
+        transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;
+
         RaycastHit hit;
         List<RaycastHit> hits = new List<RaycastHit>();
 
@@ -123,19 +129,13 @@ public class CustomPhysicsObject : MonoBehaviour
             transform.rotation = rot;
         }
 
-        if (!groundedLast && grounded) {
-            groundSpeed -= new Vector2(Mathf.Sin(groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Deg2Rad) * verticalSpeed;
-        }
+        
 
 
-        groundSpeedLast = groundSpeed;
-        verticalSpeedLast = verticalSpeed;
-        upDirectionLast = upDirection;
-        groundedLast = grounded;
-        keepSpeedCache = false;
+        
 
         if (grounded) {
-            verticalSpeed = 0;
+            
 
             Vector3 avgNormal = Vector3.zero;
             int hitNum = 0;
@@ -146,31 +146,50 @@ public class CustomPhysicsObject : MonoBehaviour
             avgNormal /= hitNum;
             upDirection = Vector3.Slerp(upDirection, avgNormal, normalLerpSpeed);
 
-            groundSlopeAngle = Vector3.Angle(avgNormal, Vector3.up) * Mathf.Sign(avgNormal.y);
+            groundSlopeAngle = Vector3.Angle(avgNormal, Vector3.up);
             Vector3 temp = Vector3.Cross(avgNormal, Vector3.down);
             groundSlopeDir = Vector3.Cross(temp, avgNormal);
             groundSlopePoint = Mathf.Atan2(groundSlopeDir.x, groundSlopeDir.z);
-            groundSpeed += new Vector2( Mathf.Sin( groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Deg2Rad) * Time.deltaTime * slopeInfluence / (Speed * slopeResistFromSpeedCoefficient + 1);
+            groundSpeed += new Vector2( Mathf.Sin( groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Sign(avgNormal.y) * Mathf.Deg2Rad) * Time.deltaTime * slopeInfluence / (Speed * slopeResistFromSpeedCoefficient + 1);
 
+            if (!groundedLast && grounded) {
+                Debug.Log("Air to slope");
+                groundSpeed -= new Vector2(Mathf.Sin(groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Deg2Rad) * verticalSpeed;
+            }
+
+            verticalSpeed = 0;
+
+            if (groundSlopeAngle >= 90 && Speed < slopeFalloffSpeed) {
+                grounded = false;
+                upDirection = Vector3.up;
+                transform.position += Vector3.down * 1;
+            }
         }
         else {
             if (foundGround) grounded = true;
             else {
                 groundSlopeDir = Vector3.forward;
+                groundSlopeAngle = 0;
                 verticalSpeed += gravity * Time.fixedDeltaTime;
                 upDirection = Vector3.up;
             }
         }
 
+        groundSpeedLast = groundSpeed;
+        verticalSpeedLast = verticalSpeed;
+        upDirectionLast = upDirection;
+        groundedLast = grounded;
+        keepSpeedCache = false;
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;
         worldSpeed = transform.TransformDirection(new Vector3(groundSpeed.x, verticalSpeed, groundSpeed.y));
-        transform.position += worldSpeed * Time.fixedDeltaTime;
+        rb.velocity = worldSpeed;// * Time.fixedDeltaTime;
 
         transform.rotation = Quaternion.Euler(0, flatDirection * Mathf.Rad2Deg, 0);
         transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;
-        
+        visualRotation = Quaternion.Lerp(visualRotation, transform.rotation, 4 * Time.deltaTime);
+        transform.rotation = visualRotation;
     }
 
     public void OnDrawGizmos() {
