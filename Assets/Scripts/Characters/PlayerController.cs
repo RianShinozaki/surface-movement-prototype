@@ -12,19 +12,25 @@ public class PlayerController : CustomPhysicsObject
 {
     #region movement parameters
     [FoldoutGroup("Movement Params")] public float topSpeed;
+    [FoldoutGroup("Movement Params")] public float startSpeed;                      //Initial speed when moving from below startspeed velocity
     [FoldoutGroup("Movement Params")] public float boostSpeed;
-    [FoldoutGroup("Movement Params")] public float accelSpeed;
+    [FoldoutGroup("Movement Params")] public float accelSpeed;                      
+    [FoldoutGroup("Movement Params")] public float accelSpeedLowSpdThresh;          //Definition of low speed
+    [FoldoutGroup("Movement Params")] public float accelSpeedLowSpd;                //Accel force in low speed
     [FoldoutGroup("Movement Params")] public float decelSpeed;
     [FoldoutGroup("Movement Params")] public float accelSpeedinAir;
     [FoldoutGroup("Movement Params")] public float decelSpeedinAir;
+    [FoldoutGroup("Movement Params")] public float haltSpeed;                       //The minimum speed needed to trigger a halt
+    [FoldoutGroup("Movement Params")] public float haltAccel;                       //The force that you halt with
+    [FoldoutGroup("Movement Params")] public float haltAngle;                       //The input angle relative to direction needed to trigger a halt
 
 
     [FoldoutGroup("Movement Params")] public float steeringCoefficient;
     [FoldoutGroup("Movement Params")] public float steeringCoefficientinAir;
-    [FoldoutGroup("Movement Params")] public float fastSpeedKeepCoefficient;        //How well you get to keep your speed if you're running faster than topspeed;
-    [FoldoutGroup("Movement Params")] public float fastSpeedDecel;                  //How well you get to keep your speed if you're running faster than topspeed; NOT USED CURRENTLY
+    [FoldoutGroup("Movement Params")] public float fastSpeedKeepCoefficient;        //How well you get to keep your speed if you're running faster than topspeed //NOT USED
+    [FoldoutGroup("Movement Params")] public float fastSpeedDecel;                  //How fast you lose speed if past topspeed
     [FoldoutGroup("Movement Params")] public float jumpForce;
-    [FoldoutGroup("Movement Params")] public MovementType movementType;             //How fast you lose speed if past topspeed
+    [FoldoutGroup("Movement Params")] public MovementType movementType;             
     #endregion
 
     void Start()
@@ -60,11 +66,18 @@ public class PlayerController : CustomPhysicsObject
                     float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
 
                     Vector2 inputVec    = new Vector2(Mathf.Sin(correctedInputDirection), Mathf.Cos(correctedInputDirection));
-                    float steer         = (grounded ? steeringCoefficient : steeringCoefficientinAir);
-                    float accelForce    = (grounded ? accelSpeed : accelSpeedinAir);
-                    float accelCap      = fastSpeedDecel - 1;
-                    float accelTotal    = Mathf.Clamp((Speed * steer + accelForce), 0, accelCap);
-                    groundSpeed = Vector2.MoveTowards(groundSpeed, inputVec * 999, accelTotal * Time.deltaTime);
+
+                    if (!grounded || ( !(Speed > haltSpeed && Mathf.Abs(Vector2.Angle(groundSpeed, inputVec)) > haltAngle))) {
+                        float steer = Speed * (grounded ? steeringCoefficient : steeringCoefficientinAir) * Mathf.Sin(Mathf.Deg2Rad * Vector2.Angle(groundSpeed, inputVec));
+                        Debug.Log(steer);
+                        float accelForce = (grounded ? (Speed < accelSpeedLowSpdThresh ? accelSpeedLowSpd : accelSpeed) : accelSpeedinAir);
+                        float accelCap = fastSpeedDecel - 1;
+                        float accelTotal = Mathf.Clamp((steer + accelForce), 0, accelCap);
+                        groundSpeed = Vector2.MoveTowards(groundSpeed, inputVec * 999, accelTotal * Time.deltaTime);
+                    }
+                    else {
+                        groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, haltAccel * Time.deltaTime);
+                    }
 
                     if(Speed > topSpeed) {
                         groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, fastSpeedDecel * Time.deltaTime);

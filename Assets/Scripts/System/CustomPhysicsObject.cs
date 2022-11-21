@@ -188,7 +188,7 @@ public class CustomPhysicsObject : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0, flatDirection * Mathf.Rad2Deg, 0);
         transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;
-        visualRotation = Quaternion.Lerp(visualRotation, transform.rotation, 4 * Time.deltaTime);
+        visualRotation = Quaternion.Lerp(visualRotation, transform.rotation, 8 * Time.deltaTime);
         transform.rotation = visualRotation;
     }
 
