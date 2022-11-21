@@ -24,13 +24,17 @@ public class CustomPhysicsObject : MonoBehaviour
     [FoldoutGroup("Physics Vars")] public bool grounded;
     [FoldoutGroup("Physics Vars")] public bool groundedLast;
     [FoldoutGroup("Physics Vars")] public Vector2 groundSpeed;                      //Speed along the normal
+    [FoldoutGroup("Physics Vars")] public Vector2 groundSpeedLast;                  //Speed along the normal
     [FoldoutGroup("Physics Vars")] public float verticalSpeed;                      //Speed up and down
+    [FoldoutGroup("Physics Vars")] public float verticalSpeedLast;                  //Speed up and down
+    [FoldoutGroup("Physics Vars")] public Vector3 worldSpeed;                       //Speed up and down
     [FoldoutGroup("Physics Vars")] public float flatDirection;                      //Direction along the normal
     [FoldoutGroup("Physics Vars")] public Vector3 upDirection;                      //The current normal (or straight up if in the air)
-    [FoldoutGroup("Physics Vars")] public Vector3 upDirectionLast;                      //The current normal (or straight up if in the air)
+    [FoldoutGroup("Physics Vars")] public Vector3 upDirectionLast;                  //The current normal (or straight up if in the air)
     [FoldoutGroup("Physics Vars")] public float groundSlopeAngle;                   //The angle from upwards vector of the ground in degrees
     [FoldoutGroup("Physics Vars")] public float groundSlopePoint;                   //The angle the ground points in radians
     [FoldoutGroup("Physics Vars")] public Vector3 groundSlopeDir;                   //A vector of the direction the ground points
+    [FoldoutGroup("Physics Vars")] public bool keepSpeedCache;                      //Whether or not to reset speed when leaving a surface
     
     #endregion
 
@@ -100,24 +104,35 @@ public class CustomPhysicsObject : MonoBehaviour
             }
         }
         
-
-        Debug.Log(foundGround);
-        
         grounded = foundGround;
 
-        if (grounded != groundedLast) {
+        if (groundedLast && !grounded) {  //Slope to air
+            Debug.Log("Slope to air");
+
+            if(!keepSpeedCache) {
+                groundSpeed = Vector2.zero;
+            }
             Quaternion rot = transform.rotation;
             transform.rotation = Quaternion.Euler(0, 0, 0);
             transform.rotation = Quaternion.FromToRotation(transform.up, upDirectionLast) * transform.rotation;
-            Vector3 speedVec = transform.TransformDirection(new Vector3(groundSpeed.x, verticalSpeed, groundSpeed.y));
+            Vector3 speedVec = transform.TransformDirection(new Vector3(groundSpeedLast.x, verticalSpeedLast, groundSpeedLast.y));
 
-            //groundSpeed = new Vector2(speedVec.x, speedVec.z);
-            //verticalSpeed = speedVec.y;
+            groundSpeed += new Vector2(speedVec.x, speedVec.z);
+            verticalSpeed += speedVec.y;
 
             transform.rotation = rot;
-            groundedLast = grounded;
-            upDirectionLast = upDirection;
         }
+
+        if (!groundedLast && grounded) {
+            groundSpeed -= new Vector2(Mathf.Sin(groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Deg2Rad) * verticalSpeed;
+        }
+
+
+        groundSpeedLast = groundSpeed;
+        verticalSpeedLast = verticalSpeed;
+        upDirectionLast = upDirection;
+        groundedLast = grounded;
+        keepSpeedCache = false;
 
         if (grounded) {
             verticalSpeed = 0;
@@ -147,11 +162,11 @@ public class CustomPhysicsObject : MonoBehaviour
             }
         }
 
-        
 
         transform.rotation = Quaternion.Euler(0, 0, 0);
         transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;
-        transform.position += transform.TransformDirection(new Vector3(groundSpeed.x, verticalSpeed, groundSpeed.y)) * Time.fixedDeltaTime;
+        worldSpeed = transform.TransformDirection(new Vector3(groundSpeed.x, verticalSpeed, groundSpeed.y));
+        transform.position += worldSpeed * Time.fixedDeltaTime;
 
         transform.rotation = Quaternion.Euler(0, flatDirection * Mathf.Rad2Deg, 0);
         transform.rotation = Quaternion.FromToRotation(transform.up, upDirection) * transform.rotation;

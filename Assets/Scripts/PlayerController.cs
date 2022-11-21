@@ -55,7 +55,6 @@ public class PlayerController : CustomPhysicsObject
 
             case MovementType.Momentum:
 
-                Debug.Log(Speed);
                 if (inputMagnitude > 0) {
                     float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                     float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
@@ -72,21 +71,27 @@ public class PlayerController : CustomPhysicsObject
 
                     }
 
-                    flatDirection = correctedInputDirection;
+                    if (grounded)
+                        flatDirection = Mathf.Atan2(groundSpeed.x, groundSpeed.y);
+                    else {
+                        flatDirection = Mathf.LerpAngle(flatDirection * Mathf.Rad2Deg, correctedInputDirection * Mathf.Rad2Deg, 20 * Time.deltaTime) * Mathf.Deg2Rad;
+                    }
                 }
                 else {
-                    Debug.Log("Stop");
                     groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, (grounded ? decelSpeed : decelSpeedinAir ) * Time.deltaTime);
                 }
                 
                 if (grounded && Input.GetButtonDown("Fire1")) {
                     grounded = false;
-
+                    
                     Vector3 jumpVector = new Vector3(Vector3.Dot(upDirection, Vector3.right), Vector3.Dot(upDirection, Vector3.up), Vector3.Dot(upDirection, Vector3.forward));
-                    groundSpeed += new Vector2(jumpVector.x, jumpVector.z) * jumpForce;
-                    verticalSpeed += jumpVector.y * jumpForce;
+                    groundSpeed = new Vector2(jumpVector.x, jumpVector.z) * jumpForce;
+                    verticalSpeed = jumpVector.y * jumpForce;
+                    upDirection = Vector3.up;
+                    keepSpeedCache = true;
 
                 }
+
                 if (Input.GetButtonDown("Fire2")) {
                     groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * boostSpeed;
                 }
