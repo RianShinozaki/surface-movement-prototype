@@ -26,7 +26,6 @@ public class Spring : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
-
-        Gizmos.DrawLine(transform.position, transform.position + transform.up * springPower);
+        Gizmos.DrawRay(transform.position, transform.up * springPower);
     }
 }
