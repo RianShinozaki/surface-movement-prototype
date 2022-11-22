@@ -18,6 +18,7 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public float accelSpeedLowSpdThresh;          //Definition of low speed
     [FoldoutGroup("Movement Params")] public float accelSpeedLowSpd;                //Accel force in low speed
     [FoldoutGroup("Movement Params")] public float decelSpeed;
+    [FoldoutGroup("Movement Params")] public float decelSpeedLowSpd;
     [FoldoutGroup("Movement Params")] public float accelSpeedinAir;
     [FoldoutGroup("Movement Params")] public float decelSpeedinAir;
     [FoldoutGroup("Movement Params")] public float haltSpeed;                       //The minimum speed needed to trigger a halt
@@ -65,7 +66,7 @@ public class PlayerController : CustomPhysicsObject
                     float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                     float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
 
-                    Vector2 inputVec    = new Vector2(Mathf.Sin(correctedInputDirection), Mathf.Cos(correctedInputDirection));
+                    Vector2 inputVec    = new Vector2(Mathf.Sin(correctedInputDirection) , Mathf.Cos(correctedInputDirection));
 
                     if (!grounded || ( !(Speed > haltSpeed && Mathf.Abs(Vector2.Angle(groundSpeed, inputVec)) > haltAngle))) {
                         float steer = Speed * (grounded ? steeringCoefficient : steeringCoefficientinAir) * Mathf.Sin(Mathf.Deg2Rad * Vector2.Angle(groundSpeed, inputVec));
@@ -91,7 +92,7 @@ public class PlayerController : CustomPhysicsObject
                     }
                 }
                 else {
-                    groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, (grounded ? decelSpeed : decelSpeedinAir ) * Time.deltaTime);
+                    groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, (grounded ? (Speed < 2 ? decelSpeedLowSpd : decelSpeed) : decelSpeedinAir ) * Time.deltaTime);
                 }
                 
                 if (grounded && Input.GetButtonDown("Fire1")) {
