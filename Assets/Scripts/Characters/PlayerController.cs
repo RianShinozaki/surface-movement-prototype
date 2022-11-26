@@ -34,10 +34,13 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public bool relativeToCamera = true;
     #endregion
 
-    void Start()
-    {
-        
+    PolyAnimator animator;
+
+    public override void Awake() {
+        base.Awake();
+        animator = GetComponent<PolyAnimator>();
     }
+
 
     void Update() {
         float inputMagnitude = Mathf.Clamp(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).magnitude, 0, 1);
@@ -94,23 +97,24 @@ public class PlayerController : CustomPhysicsObject
                     groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, (grounded ? decelSpeed : decelSpeedinAir ) * Time.deltaTime);
                 }
                 
-                if (grounded && Input.GetButtonDown("Fire1")) {
+                if (grounded && Input.GetKeyDown(KeyCode.Space)) {
                     grounded = false;
                     
                     Vector3 jumpVector = new Vector3(Vector3.Dot(upDirection, Vector3.right), Vector3.Dot(upDirection, Vector3.up), Vector3.Dot(upDirection, Vector3.forward));
                     groundSpeed = new Vector2(jumpVector.x, jumpVector.z) * jumpForce;
                     verticalSpeed = jumpVector.y * jumpForce;
-                    //upDirection = Vector3.up;
                     keepSpeedCache = true;
-
+                    animator.Jump();
                 }
 
-                if (Input.GetButtonDown("Fire2")) {
+                if (Input.GetKeyDown(KeyCode.LeftShift)) {
                     groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * boostSpeed;
                 }
                 break;
         }
     }
+
+    public void Spring() => animator.Spring();
 
     public void SetRelativeCameraMovement(bool set) {
         relativeToCamera = set;

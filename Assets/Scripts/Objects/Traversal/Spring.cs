@@ -22,6 +22,7 @@ public class Spring : MonoBehaviour
             player.keepSpeedCache = true;
             player.verticalSpeed = transform.up.y * springPower;
             anim.SetTrigger("Bounce");
+            player.Spring();
         }
     }
 
