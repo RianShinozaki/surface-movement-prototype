@@ -129,13 +129,7 @@ public class CustomPhysicsObject : AlkylEntity
             transform.rotation = rot;
         }
 
-        
-
-
-        
-
         if (grounded) {
-            
 
             Vector3 avgNormal = Vector3.zero;
             int hitNum = 0;
@@ -146,19 +140,40 @@ public class CustomPhysicsObject : AlkylEntity
             avgNormal /= hitNum;
             upDirection = Vector3.Slerp(upDirection, avgNormal, normalLerpSpeed);
 
+            //Get vectors from the slope normal
             groundSlopeAngle = Vector3.Angle(avgNormal, Vector3.up);
             Vector3 temp = Vector3.Cross(avgNormal, Vector3.down);
             groundSlopeDir = Vector3.Cross(temp, avgNormal);
             groundSlopePoint = Mathf.Atan2(groundSlopeDir.x, groundSlopeDir.z);
+
+            
+
+            //Apply downward force on slope
             groundSpeed += new Vector2( Mathf.Sin( groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Sign(avgNormal.y) * Mathf.Deg2Rad) * Time.deltaTime * slopeInfluence / (Speed * slopeResistFromSpeedCoefficient + 1);
 
+            
+            //If you land on a slope from the air
             if (!groundedLast && grounded) {
                 Debug.Log("Air to slope");
                 groundSpeed -= new Vector2(Mathf.Sin(groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Deg2Rad) * verticalSpeed;
+            } else if (upDirection != upDirectionLast) { //Swapping to a new normal
+                Debug.Log("New slope normal");
+
+                /*Quaternion rot = transform.rotation;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.rotation = Quaternion.FromToRotation(upDirection, upDirectionLast) * transform.rotation;
+                Vector3 speedVec = transform.TransformDirection(new Vector3(groundSpeed.x, 0, groundSpeed.y));
+
+                groundSpeed = new Vector2(speedVec.x, speedVec.z);
+                //verticalSpeed = speedVec.y;
+
+                transform.rotation = rot;
+                */
             }
 
             verticalSpeed = 0;
 
+            //Fall off slope if you lose too much speed on too steep an incline
             if (groundSlopeAngle >= 90 && Speed < slopeFalloffSpeed) {
                 grounded = false;
                 upDirection = Vector3.up;
