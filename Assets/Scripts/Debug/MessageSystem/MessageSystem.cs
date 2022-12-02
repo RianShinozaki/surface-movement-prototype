@@ -31,5 +31,6 @@ public static class MessageSystem {
 public class ServerMessage {
     public Vector3 Position;
     public int SeverityLevel;
+    public int Type;
     public string Message;
 }

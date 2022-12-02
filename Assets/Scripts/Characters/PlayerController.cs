@@ -10,6 +10,7 @@ public enum MovementType {
 
 public class PlayerController : CustomPhysicsObject
 {
+    public static PlayerController Instance;
     #region movement parameters
     [FoldoutGroup("Movement Params")] public float topSpeed;
     [FoldoutGroup("Movement Params")] public float startSpeed;                      //Initial speed when moving from below startspeed velocity
@@ -38,6 +39,11 @@ public class PlayerController : CustomPhysicsObject
     PolyAnimator animator;
 
     public override void Awake() {
+        if (Instance) {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
         base.Awake();
         animator = GetComponent<PolyAnimator>();
     }

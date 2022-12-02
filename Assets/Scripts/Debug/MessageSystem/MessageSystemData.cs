@@ -7,4 +7,6 @@ public class MessageSystemData : ScriptableObject {
     public Color[] SeverityColors;
     public float MessageActivationDistance;
     public string ReferenceObjectOverride;
+    public string IP;
+    public int Port;
 }
