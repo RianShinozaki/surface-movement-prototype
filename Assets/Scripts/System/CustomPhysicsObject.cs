@@ -159,16 +159,16 @@ public class CustomPhysicsObject : AlkylEntity
             } else if (upDirection != upDirectionLast) { //Swapping to a new normal
                 Debug.Log("New slope normal");
 
-                /*Quaternion rot = transform.rotation;
+                Quaternion rot = transform.rotation;
                 transform.rotation = Quaternion.Euler(0, 0, 0);
-                transform.rotation = Quaternion.FromToRotation(upDirection, upDirectionLast) * transform.rotation;
+                transform.rotation = Quaternion.FromToRotation(upDirectionLast, upDirection) * transform.rotation;
                 Vector3 speedVec = transform.TransformDirection(new Vector3(groundSpeed.x, 0, groundSpeed.y));
 
                 groundSpeed = new Vector2(speedVec.x, speedVec.z);
                 //verticalSpeed = speedVec.y;
 
                 transform.rotation = rot;
-                */
+                
             }
 
             verticalSpeed = 0;
