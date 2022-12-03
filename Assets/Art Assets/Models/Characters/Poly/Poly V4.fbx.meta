@@ -33,6 +33,18 @@ ModelImporter:
   - first:
       74: -7059025426842093692
     second: Jump Transition
+  - first:
+      74: 6720303635017113406
+    second: Attack
+  - first:
+      74: 4594303134292970328
+    second: Homing Start
+  - first:
+      74: 514091788539336764
+    second: Homing Loop
+  - first:
+      74: -8679223429390795250
+    second: Homing End
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -1373,6 +1385,586 @@ ModelImporter:
       internalID: 0
       firstFrame: 380
       lastFrame: 390
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Ball
+        weight: 1
+      - path: Armature/Ball/Ball Stretch
+        weight: 1
+      - path: Armature/Ball/Ball Stretch/Ball Stretch_end
+        weight: 1
+      - path: Armature/Ball/Body
+        weight: 0
+      - path: Armature/Ball/Body/Arm.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Lower Claw.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Lower Claw.L/Lower Claw.L_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Upper Claw.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Upper Claw.L/Upper Claw.L_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Lower Claw.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Lower Claw.R/Lower Claw.R_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Upper Claw.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Upper Claw.R/Upper Claw.R_end
+        weight: 1
+      - path: Armature/Ball/Body/Head
+        weight: 1
+      - path: Armature/Ball/Body/Head/Head_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 1
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 1/Upper Jacket 1_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 2
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 2/Upper Jacket 2_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 3
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 3/Upper Jacket 3_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 4
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 4/Upper Jacket 4_end
+        weight: 1
+      - path: Armature/Ball/Body/Zipper
+        weight: 1
+      - path: Armature/Ball/Body/Zipper/Zipper_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 1
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 1/Lower Jacket 1_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 2
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 2/Lower Jacket 2_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 3
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 3/Lower Jacket 3_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 4
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 4/Lower Jacket 4_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 5
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 5/Lower Jacket 5_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 6
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 6/Lower Jacket 6_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 7
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 7/Lower Jacket 7_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 8
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 8/Lower Jacket 8_end
+        weight: 1
+      - path: Armature/Ball/Ring
+        weight: 0
+      - path: Armature/Ball/Ring/Ring_end
+        weight: 1
+      - path: Arms
+        weight: 1
+      - path: Ball
+        weight: 1
+      - path: Ball Magnets
+        weight: 1
+      - path: Ball Ring
+        weight: 1
+      - path: Ball Ring Balls
+        weight: 1
+      - path: Body
+        weight: 0
+      - path: Eyeglasses
+        weight: 0
+      - path: Head
+        weight: 0
+      - path: Headband
+        weight: 0
+      - path: Hood
+        weight: 0
+      - path: Sweater
+        weight: 0
+      - path: Zipper
+        weight: 0
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Attack
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 400
+      lastFrame: 430
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Ball
+        weight: 1
+      - path: Armature/Ball/Ball Stretch
+        weight: 1
+      - path: Armature/Ball/Ball Stretch/Ball Stretch_end
+        weight: 1
+      - path: Armature/Ball/Body
+        weight: 0
+      - path: Armature/Ball/Body/Arm.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Lower Claw.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Lower Claw.L/Lower Claw.L_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Upper Claw.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Upper Claw.L/Upper Claw.L_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Lower Claw.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Lower Claw.R/Lower Claw.R_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Upper Claw.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Upper Claw.R/Upper Claw.R_end
+        weight: 1
+      - path: Armature/Ball/Body/Head
+        weight: 1
+      - path: Armature/Ball/Body/Head/Head_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 1
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 1/Upper Jacket 1_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 2
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 2/Upper Jacket 2_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 3
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 3/Upper Jacket 3_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 4
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 4/Upper Jacket 4_end
+        weight: 1
+      - path: Armature/Ball/Body/Zipper
+        weight: 1
+      - path: Armature/Ball/Body/Zipper/Zipper_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 1
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 1/Lower Jacket 1_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 2
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 2/Lower Jacket 2_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 3
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 3/Lower Jacket 3_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 4
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 4/Lower Jacket 4_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 5
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 5/Lower Jacket 5_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 6
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 6/Lower Jacket 6_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 7
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 7/Lower Jacket 7_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 8
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 8/Lower Jacket 8_end
+        weight: 1
+      - path: Armature/Ball/Ring
+        weight: 0
+      - path: Armature/Ball/Ring/Ring_end
+        weight: 1
+      - path: Arms
+        weight: 1
+      - path: Ball
+        weight: 1
+      - path: Ball Magnets
+        weight: 1
+      - path: Ball Ring
+        weight: 1
+      - path: Ball Ring Balls
+        weight: 1
+      - path: Body
+        weight: 0
+      - path: Eyeglasses
+        weight: 0
+      - path: Head
+        weight: 0
+      - path: Headband
+        weight: 0
+      - path: Hood
+        weight: 0
+      - path: Sweater
+        weight: 0
+      - path: Zipper
+        weight: 0
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Homing Start
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 440
+      lastFrame: 449
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Ball
+        weight: 1
+      - path: Armature/Ball/Ball Stretch
+        weight: 1
+      - path: Armature/Ball/Ball Stretch/Ball Stretch_end
+        weight: 1
+      - path: Armature/Ball/Body
+        weight: 0
+      - path: Armature/Ball/Body/Arm.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Lower Claw.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Lower Claw.L/Lower Claw.L_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Upper Claw.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Upper Claw.L/Upper Claw.L_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Lower Claw.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Lower Claw.R/Lower Claw.R_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Upper Claw.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Upper Claw.R/Upper Claw.R_end
+        weight: 1
+      - path: Armature/Ball/Body/Head
+        weight: 1
+      - path: Armature/Ball/Body/Head/Head_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 1
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 1/Upper Jacket 1_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 2
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 2/Upper Jacket 2_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 3
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 3/Upper Jacket 3_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 4
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 4/Upper Jacket 4_end
+        weight: 1
+      - path: Armature/Ball/Body/Zipper
+        weight: 1
+      - path: Armature/Ball/Body/Zipper/Zipper_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 1
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 1/Lower Jacket 1_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 2
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 2/Lower Jacket 2_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 3
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 3/Lower Jacket 3_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 4
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 4/Lower Jacket 4_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 5
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 5/Lower Jacket 5_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 6
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 6/Lower Jacket 6_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 7
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 7/Lower Jacket 7_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 8
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 8/Lower Jacket 8_end
+        weight: 1
+      - path: Armature/Ball/Ring
+        weight: 0
+      - path: Armature/Ball/Ring/Ring_end
+        weight: 1
+      - path: Arms
+        weight: 1
+      - path: Ball
+        weight: 1
+      - path: Ball Magnets
+        weight: 1
+      - path: Ball Ring
+        weight: 1
+      - path: Ball Ring Balls
+        weight: 1
+      - path: Body
+        weight: 0
+      - path: Eyeglasses
+        weight: 0
+      - path: Head
+        weight: 0
+      - path: Headband
+        weight: 0
+      - path: Hood
+        weight: 0
+      - path: Sweater
+        weight: 0
+      - path: Zipper
+        weight: 0
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Homing Loop
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 449
+      lastFrame: 459
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Ball
+        weight: 1
+      - path: Armature/Ball/Ball Stretch
+        weight: 1
+      - path: Armature/Ball/Ball Stretch/Ball Stretch_end
+        weight: 1
+      - path: Armature/Ball/Body
+        weight: 0
+      - path: Armature/Ball/Body/Arm.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Lower Claw.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Lower Claw.L/Lower Claw.L_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Upper Claw.L
+        weight: 1
+      - path: Armature/Ball/Body/Arm.L/Upper Claw.L/Upper Claw.L_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Lower Claw.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Lower Claw.R/Lower Claw.R_end
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Upper Claw.R
+        weight: 1
+      - path: Armature/Ball/Body/Arm.R/Upper Claw.R/Upper Claw.R_end
+        weight: 1
+      - path: Armature/Ball/Body/Head
+        weight: 1
+      - path: Armature/Ball/Body/Head/Head_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 1
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 1/Upper Jacket 1_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 2
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 2/Upper Jacket 2_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 3
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 3/Upper Jacket 3_end
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 4
+        weight: 1
+      - path: Armature/Ball/Body/Upper Jacket 4/Upper Jacket 4_end
+        weight: 1
+      - path: Armature/Ball/Body/Zipper
+        weight: 1
+      - path: Armature/Ball/Body/Zipper/Zipper_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 1
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 1/Lower Jacket 1_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 2
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 2/Lower Jacket 2_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 3
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 3/Lower Jacket 3_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 4
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 4/Lower Jacket 4_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 5
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 5/Lower Jacket 5_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 6
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 6/Lower Jacket 6_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 7
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 7/Lower Jacket 7_end
+        weight: 1
+      - path: Armature/Ball/Lower Jacket 8
+        weight: 0
+      - path: Armature/Ball/Lower Jacket 8/Lower Jacket 8_end
+        weight: 1
+      - path: Armature/Ball/Ring
+        weight: 0
+      - path: Armature/Ball/Ring/Ring_end
+        weight: 1
+      - path: Arms
+        weight: 1
+      - path: Ball
+        weight: 1
+      - path: Ball Magnets
+        weight: 1
+      - path: Ball Ring
+        weight: 1
+      - path: Ball Ring Balls
+        weight: 1
+      - path: Body
+        weight: 0
+      - path: Eyeglasses
+        weight: 0
+      - path: Head
+        weight: 0
+      - path: Headband
+        weight: 0
+      - path: Hood
+        weight: 0
+      - path: Sweater
+        weight: 0
+      - path: Zipper
+        weight: 0
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Homing End
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 460
+      lastFrame: 490
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
