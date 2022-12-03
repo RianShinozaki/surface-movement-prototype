@@ -5,7 +5,8 @@ using Sirenix.OdinInspector;
 
 public enum MovementType {
     Simple,
-    Momentum
+    Momentum,
+    Homing
 }
 
 public class PlayerController : CustomPhysicsObject
@@ -35,10 +36,15 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public MovementType movementType;
     [FoldoutGroup("Movement Params")] public bool relativeToCamera = true;
 
+    [FoldoutGroup("Movement Params")] public float homingSpeed;
+
     [FoldoutGroup("Movement Params")] public InputPath currentPath;
     #endregion
 
+    [FoldoutGroup("Movement Variables")] public HomingTarget currentTarget;
+
     PolyAnimator animator;
+    PlayerHomingSensor homingSensor;
 
     public override void Awake() {
         if (Instance) {
@@ -48,6 +54,7 @@ public class PlayerController : CustomPhysicsObject
         Instance = this;
         base.Awake();
         animator = GetComponent<PolyAnimator>();
+        homingSensor = GetComponentInChildren<PlayerHomingSensor>();
     }
 
 
@@ -102,7 +109,7 @@ public class PlayerController : CustomPhysicsObject
 
                     if (!grounded || ( !(Speed > haltSpeed && Mathf.Abs(Vector2.Angle(groundSpeed, inputVec)) > haltAngle))) {
                         float steer = Speed * (grounded ? steeringCoefficient : steeringCoefficientinAir) * Mathf.Sin(Mathf.Deg2Rad * Vector2.Angle(groundSpeed, inputVec));
-                        Debug.Log(steer);
+                        //Debug.Log(steer);
                         float accelForce = (grounded ? (Speed < accelSpeedLowSpdThresh ? accelSpeedLowSpd : accelSpeed) : accelSpeedinAir);
                         float accelCap = fastSpeedDecel - 1;
                         float accelTotal = Mathf.Clamp((steer + accelForce), 0, accelCap);
@@ -137,9 +144,34 @@ public class PlayerController : CustomPhysicsObject
                     animator.Jump();
                 }
 
-                if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                if (Input.GetMouseButtonDown(1)) {
                     groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * boostSpeed;
                 }
+
+                if (Input.GetKey(KeyCode.LeftShift)) { 
+                    HomingTarget nearestTarget = homingSensor.GetNearest(transform.position, new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)), 60f);
+
+                    if (nearestTarget != null) {
+                        nearestTarget.displayReticle = true;
+
+                        if (Input.GetMouseButtonDown(0)) {
+                            movementType = MovementType.Homing;
+                            currentTarget = nearestTarget;
+                            //transform.position = nearestTarget.transform.position;
+                        }
+                    }
+                }
+
+                break;
+            case MovementType.Homing:
+                Vector3 totalSpd = (currentTarget.transform.position - transform.position).normalized * homingSpeed;
+                grounded = false;
+                grounded = false;
+                upDirectionLast = Vector3.up;
+                groundedLast = false;
+                groundSpeed = new Vector2(totalSpd.x, totalSpd.z);
+                verticalSpeed = totalSpd.y;
+                keepSpeedCache = false;
                 break;
         }
     }
