@@ -207,7 +207,7 @@ public class CustomPhysicsObject : AlkylEntity
         transform.rotation = visualRotation;
     }
 
-    public void OnDrawGizmos() {
+    public virtual void OnDrawGizmos() {
         Ray r = new Ray(transform.position, transform.forward);
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(r);

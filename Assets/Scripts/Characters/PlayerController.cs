@@ -34,6 +34,8 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public float jumpForce;
     [FoldoutGroup("Movement Params")] public MovementType movementType;
     [FoldoutGroup("Movement Params")] public bool relativeToCamera = true;
+
+    [FoldoutGroup("Movement Params")] public InputPath currentPath;
     #endregion
 
     PolyAnimator animator;
@@ -77,6 +79,27 @@ public class PlayerController : CustomPhysicsObject
 
                     Vector2 inputVec    = new Vector2(Mathf.Sin(correctedInputDirection) , Mathf.Cos(correctedInputDirection));
 
+                    if(currentPath != null) {
+                        float t = currentPath.myPath.path.GetClosestDistanceAlongPath(transform.position);
+                        Vector3 dirAlongPath = currentPath.myPath.path.GetDirectionAtDistance(t);
+                        Vector3 dirToPath = (currentPath.myPath.path.GetClosestPointOnPath(transform.position) - transform.position).normalized;
+                        float distTopath = (currentPath.myPath.path.GetClosestPointOnPath(transform.position) - transform.position).magnitude;
+                        float distToPathClamped = Mathf.Clamp(distTopath / currentPath.displacementDistMax, 0, 1);
+
+                        Vector3 moveDir = dirAlongPath * (1 - currentPath.displacementInfluenceFalloff.Evaluate(distToPathClamped)) + dirToPath * currentPath.displacementInfluenceFalloff.Evaluate(distToPathClamped);
+
+                        Quaternion rot = transform.rotation;
+                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                        transform.rotation = Quaternion.FromToRotation(transform.up, upDirectionLast) * transform.rotation;
+                        Vector3 correctMoveDir = transform.InverseTransformDirection(moveDir);
+
+                        inputVec = Vector2.Lerp(inputVec, new Vector2(correctMoveDir.x, correctMoveDir.z).normalized, currentPath.pathInfluence);
+
+                        transform.rotation = rot;
+
+
+                    }
+
                     if (!grounded || ( !(Speed > haltSpeed && Mathf.Abs(Vector2.Angle(groundSpeed, inputVec)) > haltAngle))) {
                         float steer = Speed * (grounded ? steeringCoefficient : steeringCoefficientinAir) * Mathf.Sin(Mathf.Deg2Rad * Vector2.Angle(groundSpeed, inputVec));
                         Debug.Log(steer);
@@ -119,6 +142,28 @@ public class PlayerController : CustomPhysicsObject
                 }
                 break;
         }
+    }
+
+    public override void OnDrawGizmos() {
+        if(currentPath != null) {
+            Gizmos.DrawSphere(currentPath.myPath.path.GetClosestPointOnPath(transform.position), 1);
+
+            float t = currentPath.myPath.path.GetClosestDistanceAlongPath(transform.position);
+            Vector3 dirAlongPath = currentPath.myPath.path.GetDirectionAtDistance(t);
+            Vector3 dirToPath = (currentPath.myPath.path.GetClosestPointOnPath(transform.position) - transform.position).normalized;
+
+            Vector3 moveDir = (dirAlongPath + dirToPath).normalized;
+
+            Ray r = new Ray(transform.position, moveDir);
+            Gizmos.DrawRay(r);
+        }
+    }
+
+    public void SetInputPath(InputPath ip) {
+        currentPath = ip;
+    }
+    public void UnsetInputPath(InputPath ip) {
+        if (currentPath == ip) currentPath = null;
     }
 
     public void Spring() => animator.Spring();
