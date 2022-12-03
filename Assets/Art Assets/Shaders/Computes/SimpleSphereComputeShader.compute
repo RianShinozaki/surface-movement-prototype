@@ -1,0 +1,35 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+struct Sphere {
+    float3 pos;
+    float4 color;
+    float radius;
+};
+
+//Output Textures
+RWTexture2D<float4> Result;
+RWTexture2D<float4> Depth;
+//Sphere Data
+StructuredBuffer<Sphere> sphereData;
+
+//Lighting
+float3 mainLightDir;
+
+[numthreads(8,8,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    for (int i = 0; i < sphereData.Length; i++) {
+        if (length(id.xy - sphereData[i].pos.xy) <= sphereData[i].radius) {
+            float2 normal = normalize(id.xy - sphereData[i].pos.xy);
+
+            float dotProduct = dot(normal, normalize(mainLightDir.xy));
+            dotProduct += 1.0;
+            dotProduct /= 2.0;
+            dotProduct = saturate(dotProduct * sphereData[i].radius);
+
+            Result[id.xy] = float4(sphereData[i].color.xyz * dotProduct, 1.0);
+            //Depth[id.xy] = float4(sphereData[i].pos.z, sphereData[i].pos.z, sphereData[i].pos.z, 1.0);
+        }
+    }
+}
