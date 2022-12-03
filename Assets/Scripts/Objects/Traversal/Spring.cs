@@ -23,6 +23,7 @@ public class Spring : MonoBehaviour
             player.verticalSpeed = transform.up.y * springPower;
             player.movementType = MovementType.Momentum;
             anim.SetTrigger("Bounce");
+            player.Homing(false);
             player.Spring();
         }
     }

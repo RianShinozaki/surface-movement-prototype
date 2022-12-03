@@ -32,4 +32,10 @@ public class PolyAnimator : MonoBehaviour {
     public void Spring() {
         anim.SetTrigger("Spring");
     }
+    public void Homing(bool set) {
+        anim.SetBool("Homing", set);
+    }
+    public void CancelHoming() {
+        anim.SetTrigger("Cancel Homing");
+    }
 }

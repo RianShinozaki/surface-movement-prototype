@@ -157,6 +157,7 @@ public class PlayerController : CustomPhysicsObject
                         if (Input.GetMouseButtonDown(0)) {
                             movementType = MovementType.Homing;
                             currentTarget = nearestTarget;
+                            Homing(true);
                             //transform.position = nearestTarget.transform.position;
                         }
                     }
@@ -199,6 +200,8 @@ public class PlayerController : CustomPhysicsObject
     }
 
     public void Spring() => animator.Spring();
+    public void Homing(bool set) => animator.Homing(set);
+    public void CancelHoming() => animator.CancelHoming();
 
     public void SetRelativeCameraMovement(bool set) {
         relativeToCamera = set;
