@@ -21,6 +21,7 @@ public class Spring : MonoBehaviour
             player.groundSpeed = new Vector2(transform.up.x, transform.up.z) * springPower;
             player.keepSpeedCache = true;
             player.verticalSpeed = transform.up.y * springPower;
+            player.movementType = MovementType.Momentum;
             anim.SetTrigger("Bounce");
             player.Spring();
         }
