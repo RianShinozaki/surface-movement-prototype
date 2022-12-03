@@ -35,16 +35,15 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public float jumpForce;
     [FoldoutGroup("Movement Params")] public MovementType movementType;
     [FoldoutGroup("Movement Params")] public bool relativeToCamera = true;
-
     [FoldoutGroup("Movement Params")] public float homingSpeed;
-
     [FoldoutGroup("Movement Params")] public InputPath currentPath;
     #endregion
 
     [FoldoutGroup("Movement Variables")] public HomingTarget currentTarget;
 
-    PolyAnimator animator;
-    PlayerHomingSensor homingSensor;
+    [FoldoutGroup("Components")] PolyAnimator animator;
+    [FoldoutGroup("Components")] PlayerHomingSensor homingSensor;
+    [FoldoutGroup("Components")] TrailRenderer trail;
 
     public override void Awake() {
         if (Instance) {
@@ -55,6 +54,7 @@ public class PlayerController : CustomPhysicsObject
         base.Awake();
         animator = GetComponent<PolyAnimator>();
         homingSensor = GetComponentInChildren<PlayerHomingSensor>();
+        trail = GetComponentInChildren<TrailRenderer>();
     }
 
 
@@ -162,9 +162,12 @@ public class PlayerController : CustomPhysicsObject
                         }
                     }
                 }
+                trail.startColor = Color.Lerp(trail.startColor, new Color(1, 1, 1, Mathf.Clamp( ((Speed-40)/80) , 0, 1)), Time.deltaTime * 4);
 
                 break;
             case MovementType.Homing:
+                trail.startColor = new Color(1, 1, 1, 1);
+                trail.endColor = new Color(1, 1, 1, 0);
                 Vector3 totalSpd = (currentTarget.transform.position - transform.position).normalized * homingSpeed;
                 grounded = false;
                 grounded = false;
