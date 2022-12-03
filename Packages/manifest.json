@@ -8,18 +8,10 @@
         "com.febucci.custom-hierarchy",
         "com.openupm"
       ]
-    },
-    {
-      "name": "spoiledcat",
-      "url": "https://registry.spoiledcat.com",
-      "scopes": [
-        "com.spoiledcat"
-      ]
     }
   ],
   "dependencies": {
     "com.febucci.custom-hierarchy": "https://github.com/febucci/unitypackage-custom-hierarchy.git",
-    "com.spoiledcat.git": "1.0.12",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.cinemachine": "2.8.9",
     "com.unity.ide.visualstudio": "2.0.16",
