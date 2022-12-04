@@ -162,7 +162,7 @@ public class PlayerController : CustomPhysicsObject
                         }
                     }
                 }
-                trail.startColor = Color.Lerp(trail.startColor, new Color(1, 1, 1, Mathf.Clamp( ((Speed-40)/80) , 0, 1)), Time.deltaTime * 4);
+                trail.startColor = Color.Lerp(trail.startColor, new Color(1, 1, 1, Mathf.Clamp( ((Speed-30)/60) , 0, 1)), Time.deltaTime * 4);
 
                 break;
             case MovementType.Homing:
