@@ -37,13 +37,22 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public bool relativeToCamera = true;
     [FoldoutGroup("Movement Params")] public float homingSpeed;
     [FoldoutGroup("Movement Params")] public InputPath currentPath;
+
+    [FoldoutGroup("Movement Params")] public float attackSpeedBoost;
+    [FoldoutGroup("Movement Params")] public float attackVertBoost;
+    [FoldoutGroup("Movement Params")] public float attackCooldownMax;
+
     #endregion
 
     [FoldoutGroup("Movement Variables")] public HomingTarget currentTarget;
+    [FoldoutGroup("Movement Variables")] public bool canAirAttackBoost;
+    [FoldoutGroup("Movement Variables")] public float attackCooldown;
 
     [FoldoutGroup("Components")] PolyAnimator animator;
     [FoldoutGroup("Components")] PlayerHomingSensor homingSensor;
     [FoldoutGroup("Components")] TrailRenderer trail;
+    [FoldoutGroup("Components")] public UnityEngine.VFX.VisualEffect SpinVFX;
+    [FoldoutGroup("Components")] public UnityEngine.VFX.VisualEffect HomingVFX;
 
     public override void Awake() {
         if (Instance) {
@@ -107,6 +116,10 @@ public class PlayerController : CustomPhysicsObject
 
                     }
 
+                    if(grounded && Speed < 2) {
+                        groundSpeed = inputVec * startSpeed;
+                    }
+
                     if (!grounded || ( !(Speed > haltSpeed && Mathf.Abs(Vector2.Angle(groundSpeed, inputVec)) > haltAngle))) {
                         float steer = Speed * (grounded ? steeringCoefficient : steeringCoefficientinAir) * Mathf.Sin(Mathf.Deg2Rad * Vector2.Angle(groundSpeed, inputVec));
                         //Debug.Log(steer);
@@ -148,6 +161,7 @@ public class PlayerController : CustomPhysicsObject
                     groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * boostSpeed;
                 }
 
+                HomingVFX.Stop();
                 if (Input.GetKey(KeyCode.LeftShift)) { 
                     HomingTarget nearestTarget = homingSensor.GetNearest(transform.position, new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)), 60f);
 
@@ -158,8 +172,30 @@ public class PlayerController : CustomPhysicsObject
                             movementType = MovementType.Homing;
                             currentTarget = nearestTarget;
                             Homing(true);
-                            //transform.position = nearestTarget.transform.position;
+                            HomingVFX.Play();
+                            break;
                         }
+                    }
+                }
+
+                if (grounded)
+                    canAirAttackBoost = true;
+
+                if (attackCooldown != 0)
+                    attackCooldown = Mathf.MoveTowards(attackCooldown, 0, Time.deltaTime);
+                else {
+                    SpinVFX.Stop();
+                    if (Input.GetMouseButtonDown(0)) {
+                        if (!grounded && canAirAttackBoost) {
+                            canAirAttackBoost = false;
+                            verticalSpeed = attackVertBoost;
+                        }
+                        if(grounded) {
+                            groundSpeed += new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * attackSpeedBoost;
+                        }
+                        SpinVFX.Play();
+                        Attack();
+                        attackCooldown = attackCooldownMax;
                     }
                 }
                 trail.startColor = Color.Lerp(trail.startColor, new Color(1, 1, 1, Mathf.Clamp( ((Speed-30)/60) , 0, 1)), Time.deltaTime * 4);
@@ -176,6 +212,7 @@ public class PlayerController : CustomPhysicsObject
                 groundSpeed = new Vector2(totalSpd.x, totalSpd.z);
                 verticalSpeed = totalSpd.y;
                 keepSpeedCache = false;
+                transform.LookAt(currentTarget.transform);
                 break;
         }
     }
@@ -203,6 +240,7 @@ public class PlayerController : CustomPhysicsObject
     }
 
     public void Spring() => animator.Spring();
+    public void Attack() => animator.Attack();
     public void Homing(bool set) => animator.Homing(set);
     public void CancelHoming() => animator.CancelHoming();
 

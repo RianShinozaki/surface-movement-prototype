@@ -20,15 +20,14 @@ public class PolyAnimator : MonoBehaviour {
         anim.SetFloat("Speed", controller.groundSpeed.magnitude / ReferenceTopSpeed);
         anim.SetBool("In Air", !controller.grounded);
 
-        if (Input.GetKeyDown(KeyCode.E)) {
-            anim.SetTrigger("Attack");
-        }
     }
 
     public void Jump() {
         anim.SetTrigger("Jump");
     }
-
+    public void Attack() {
+        anim.SetTrigger("Attack");
+    }
     public void Spring() {
         anim.SetTrigger("Spring");
     }

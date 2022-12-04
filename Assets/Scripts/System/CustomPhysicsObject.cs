@@ -18,6 +18,8 @@ public class CustomPhysicsObject : AlkylEntity
     [FoldoutGroup("Physics Params")] public float slopeResistFromSpeedCoefficient;  //Being faster makes slopes affect you this much less
     [FoldoutGroup("Physics Params")] public float normalLerpSpeed;                  //Speed of the smoothening when changing normals
     [FoldoutGroup("Physics Params")] public float slopeFalloffSpeed;                //Minimum speed to stay on 90 degree or greater slopes
+    [FoldoutGroup("Physics Params")] public float dynamicFriction;
+    [FoldoutGroup("Physics Params")] public float staticFriction;
     [FoldoutGroup("Physics Params")] public LayerMask environmentMask;
     #endregion
 
@@ -151,6 +153,10 @@ public class CustomPhysicsObject : AlkylEntity
             //Apply downward force on slope
             groundSpeed += new Vector2( Mathf.Sin( groundSlopePoint), Mathf.Cos(groundSlopePoint)) * Mathf.Sin(groundSlopeAngle * Mathf.Sign(avgNormal.y) * Mathf.Deg2Rad) * Time.deltaTime * slopeInfluence / (Speed * slopeResistFromSpeedCoefficient + 1);
 
+            groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, dynamicFriction * Time.deltaTime);
+            if(Speed < 2) {
+                groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, staticFriction * Time.deltaTime);
+            }
             
             //If you land on a slope from the air
             if (!groundedLast && grounded) {
