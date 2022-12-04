@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4532851347867906985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4532851347867906986}
+  - component: {fileID: 4532851347867906987}
+  m_Layer: 0
+  m_Name: Hexa Stone - PIP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &4532851347867906986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4532851347867906985}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 100.61, y: 2.26, z: 91.77}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4532851347867906987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4532851347867906985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b1800a400166664ba3ecea5c41c6f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lock: 0
+  Prefabs:
+  - {fileID: 919132149155446097, guid: 5a46c95b999cb0548a93743c394d12ff, type: 3}
+  - {fileID: 919132149155446097, guid: d7ed6f7fe02e28b48bf5d89b7b8f8f6d, type: 3}
+  - {fileID: 919132149155446097, guid: c8a2d5dc06f6c3d47b2f1c2d55dd5c57, type: 3}
+  - {fileID: 919132149155446097, guid: a2fd1f9bd45774447abee7c069a46d35, type: 3}
+  - {fileID: 919132149155446097, guid: d713cc44a4a289f43926098409b523ff, type: 3}
+  YRandomizationFactor: 0.2

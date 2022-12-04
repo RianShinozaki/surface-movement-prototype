@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class PickInPlace : MonoBehaviour {
+public abstract class PickInPlace : MonoBehaviour {
+    public bool Lock;
     public int GetRandom(int MaxValue) => Random.Range(0, MaxValue);
 
     Vector3 lastPos;
     Quaternion lastRot;
 
+    private void Awake() {
+        if (Application.isPlaying) {
+            Destroy(this);
+        }
+    }
+
     private void Update() {
-        if (transform.position == lastPos && transform.rotation == lastRot) {
+        if ((transform.position == lastPos && transform.rotation == lastRot) || Lock) {
             return;
         }
 
