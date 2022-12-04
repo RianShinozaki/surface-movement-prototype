@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class CustomPhysicsObject : AlkylEntity
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SphereCollider))]
+public class CustomPhysicsObject : MonoBehaviour
 {
     public Rigidbody rb;
     public SphereCollider coll;

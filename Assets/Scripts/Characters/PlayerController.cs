@@ -36,9 +36,12 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public MovementType movementType;
     [FoldoutGroup("Movement Params")] public bool relativeToCamera = true;
     [FoldoutGroup("Movement Params")] public float homingSpeed;
+    [FoldoutGroup("Movement Params")] public float maxHomingTime;
+    [FoldoutGroup("Movement Params")] public float homingHitBounce;
     [FoldoutGroup("Movement Params")] public InputPath currentPath;
 
     [FoldoutGroup("Movement Params")] public float attackSpeedBoost;
+    [FoldoutGroup("Movement Params")] public float attackStruckTargetBoost;
     [FoldoutGroup("Movement Params")] public float attackVertBoost;
     [FoldoutGroup("Movement Params")] public float attackCooldownMax;
 
@@ -47,20 +50,21 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Variables")] public HomingTarget currentTarget;
     [FoldoutGroup("Movement Variables")] public bool canAirAttackBoost;
     [FoldoutGroup("Movement Variables")] public float attackCooldown;
+    [FoldoutGroup("Movement Variables")] public float timeInHoming;
 
     [FoldoutGroup("Components")] PolyAnimator animator;
     [FoldoutGroup("Components")] PlayerHomingSensor homingSensor;
     [FoldoutGroup("Components")] TrailRenderer trail;
     [FoldoutGroup("Components")] public UnityEngine.VFX.VisualEffect SpinVFX;
     [FoldoutGroup("Components")] public UnityEngine.VFX.VisualEffect HomingVFX;
+    [FoldoutGroup("Components")] public GameObject hitbox;
 
-    public override void Awake() {
+    public void Awake() {
         if (Instance) {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        base.Awake();
         animator = GetComponent<PolyAnimator>();
         homingSensor = GetComponentInChildren<PlayerHomingSensor>();
         trail = GetComponentInChildren<TrailRenderer>();
@@ -170,7 +174,9 @@ public class PlayerController : CustomPhysicsObject
 
                         if (Input.GetMouseButtonDown(0)) {
                             movementType = MovementType.Homing;
+                            timeInHoming = 0;
                             currentTarget = nearestTarget;
+                            hitbox.SetActive(true);
                             Homing(true);
                             HomingVFX.Play();
                             break;
@@ -185,6 +191,7 @@ public class PlayerController : CustomPhysicsObject
                     attackCooldown = Mathf.MoveTowards(attackCooldown, 0, Time.deltaTime);
                 else {
                     SpinVFX.Stop();
+                    hitbox.SetActive(false);
                     if (Input.GetMouseButtonDown(0)) {
                         if (!grounded && canAirAttackBoost) {
                             canAirAttackBoost = false;
@@ -195,6 +202,7 @@ public class PlayerController : CustomPhysicsObject
                         }
                         SpinVFX.Play();
                         Attack();
+                        hitbox.SetActive(true);
                         attackCooldown = attackCooldownMax;
                     }
                 }
@@ -213,6 +221,33 @@ public class PlayerController : CustomPhysicsObject
                 verticalSpeed = totalSpd.y;
                 keepSpeedCache = false;
                 transform.LookAt(currentTarget.transform);
+
+                timeInHoming += Time.deltaTime;
+                if(timeInHoming > maxHomingTime) {
+                    CancelHoming();
+                    movementType = MovementType.Momentum;
+                }
+                break;
+        }
+    }
+
+    public void OnStruckTarget(BaseEnemy ent) {
+        switch (movementType) {
+            case MovementType.Momentum:
+                groundSpeed += new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * attackStruckTargetBoost;
+                break;
+            case MovementType.Homing:
+                transform.position = transform.position + transform.up;
+                grounded = false;
+                upDirectionLast = Vector3.up;
+                groundedLast = false;
+                groundSpeed = Vector2.zero;
+                keepSpeedCache = true;
+                verticalSpeed = homingHitBounce;
+                movementType = MovementType.Momentum;
+                canAirAttackBoost = true;
+                hitbox.SetActive(false);
+                Homing(false);
                 break;
         }
     }

@@ -22,6 +22,7 @@ public class Spring : MonoBehaviour
             player.keepSpeedCache = true;
             player.verticalSpeed = transform.up.y * springPower;
             player.movementType = MovementType.Momentum;
+            player.canAirAttackBoost = true;
             anim.SetTrigger("Bounce");
             player.Homing(false);
             player.Spring();
