@@ -4,7 +4,6 @@ using UnityEngine;
 
 
 public class SpawnLevelEssentials {
-
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void SpawnEssentials(){
         if(!Application.isPlaying){
