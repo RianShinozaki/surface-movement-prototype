@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public static class SpawnLevelEssentials {
+public class SpawnLevelEssentials {
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void SpawnEssentials(){
+    public static void SpawnEssentials(){
         if(!Application.isPlaying){
             return;
         }
