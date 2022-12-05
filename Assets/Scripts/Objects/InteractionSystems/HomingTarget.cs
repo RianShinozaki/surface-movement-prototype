@@ -2,22 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomingTarget : MonoBehaviour
-{
-    SpriteRenderer target;
-    public bool displayReticle;
-
-    public void Start() {
-        target = GetComponentInChildren<SpriteRenderer>();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        if (displayReticle) {
-            target.gameObject.SetActive(true);
+public class HomingTarget : MonoBehaviour {
+    private void Awake() {
+        if(!PlayerController.Instance.GetComponent<PolyHomingSystem>()){
+            Destroy(gameObject);
         }
-        else target.gameObject.SetActive(false);
+    }
 
-        displayReticle = false;
+    private void OnTriggerEnter(Collider other) {
+        other.GetComponent<PolyHomingSystem>().possibleTargets.Add(transform);
+    }
+
+    private void OnTriggerExit(Collider other) {
+        other.GetComponent<PolyHomingSystem>().possibleTargets.Add(transform);
     }
 }

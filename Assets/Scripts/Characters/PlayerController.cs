@@ -47,7 +47,7 @@ public class PlayerController : CustomPhysicsObject
 
     #endregion
 
-    [FoldoutGroup("Movement Variables")] public HomingTarget currentTarget;
+    [FoldoutGroup("Movement Variables")] public Transform currentTarget;
     [FoldoutGroup("Movement Variables")] public bool canAirAttackBoost;
     [FoldoutGroup("Movement Variables")] public float attackCooldown;
     [FoldoutGroup("Movement Variables")] public float timeInHoming;
@@ -59,7 +59,7 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Components")] public UnityEngine.VFX.VisualEffect HomingVFX;
     [FoldoutGroup("Components")] public GameObject hitbox;
 
-    public void Awake() {
+    public virtual void Awake() {
         if (Instance) {
             Destroy(gameObject);
             return;
@@ -71,7 +71,7 @@ public class PlayerController : CustomPhysicsObject
     }
 
 
-    void Update() {
+    public virtual void Update() {
         float inputMagnitude = Mathf.Clamp(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).magnitude, 0, 1);
         switch (movementType) {
             case MovementType.Simple:
@@ -167,11 +167,9 @@ public class PlayerController : CustomPhysicsObject
 
                 HomingVFX.Stop();
                 if (Input.GetKey(KeyCode.LeftShift)) { 
-                    HomingTarget nearestTarget = homingSensor.GetNearest(transform.position, new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)), 60f);
-
-                    if (nearestTarget != null) {
-                        nearestTarget.displayReticle = true;
-
+                    //These get components are temp for testing until you unhook all this
+                    if (GetComponent<PolyHomingSystem>().HasTarget) {
+                        Transform nearestTarget = GetComponent<PolyHomingSystem>().ActiveTarget;
                         if (Input.GetMouseButtonDown(0)) {
                             movementType = MovementType.Homing;
                             timeInHoming = 0;
@@ -213,7 +211,6 @@ public class PlayerController : CustomPhysicsObject
                 trail.startColor = new Color(1, 1, 1, 1);
                 trail.endColor = new Color(1, 1, 1, 0);
                 Vector3 totalSpd = (currentTarget.transform.position - transform.position).normalized * homingSpeed;
-                grounded = false;
                 grounded = false;
                 upDirectionLast = Vector3.up;
                 groundedLast = false;
