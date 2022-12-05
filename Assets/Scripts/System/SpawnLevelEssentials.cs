@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "RPM/Essentials/Level Essentials List")]
-public class LevelEssentialsList : ScriptableObject{
-    public GameObject[] Essentials;
-}
-
 
 public static class SpawnLevelEssentials {
 
