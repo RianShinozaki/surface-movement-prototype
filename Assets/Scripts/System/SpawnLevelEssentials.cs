@@ -7,6 +7,7 @@ public class LevelEssentialsList : ScriptableObject{
     public GameObject[] Essentials;
 }
 
+
 public class SpawnLevelEssentials {
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
