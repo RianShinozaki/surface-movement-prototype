@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyOnEmptyVFX : MonoBehaviour {
-    public UnityEngine.VFX.VisualEffect VFX;
+public class DestroyOnEmptyPsys : MonoBehaviour {
+    public ParticleSystem psys;
     float delay = 5;
 
     void Update() {
@@ -11,13 +11,14 @@ public class DestroyOnEmptyVFX : MonoBehaviour {
             delay--;
         else {
 
-            if (VFX.aliveParticleCount == 0) {
-                VFX.Stop();
+            if (psys.particleCount == 0) {
+                psys.Stop();
                 ObjectPool.Instance.Despawn(gameObject);
             }
         }
     }
+
     private void OnEnable() {
-        VFX.Play();
+        psys.Play();
     }
 }
