@@ -5,19 +5,14 @@ using UnityEngine;
 public class DestroyOnEmptyVFX : MonoBehaviour {
     public UnityEngine.VFX.VisualEffect VFX;
     float delay = 5;
-    // Start is called before the first frame update
-    void Start() {
-        
-    }
 
-    // Update is called once per frame
     void Update() {
         if (delay > 0)
             delay--;
         else {
 
             if (VFX.aliveParticleCount == 0) {
-                Destroy(gameObject);
+                ObjectPool.Instance.Despawn(gameObject);
             }
         }
     }

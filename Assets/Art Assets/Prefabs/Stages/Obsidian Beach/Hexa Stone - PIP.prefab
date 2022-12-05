@@ -51,4 +51,4 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: c8a2d5dc06f6c3d47b2f1c2d55dd5c57, type: 3}
   - {fileID: 919132149155446097, guid: a2fd1f9bd45774447abee7c069a46d35, type: 3}
   - {fileID: 919132149155446097, guid: d713cc44a4a289f43926098409b523ff, type: 3}
-  YRandomizationFactor: 0.2
+  YRandomizationFactor: 0
