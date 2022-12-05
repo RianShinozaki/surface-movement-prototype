@@ -20,12 +20,13 @@ public class PlayerHomingSensor : MonoBehaviour {
 
     void UpdateEntities() {
         foreach (HomingTarget ent in homingTargets) {
-            if (!ent) {
+            if (!ent || !ent.isActiveAndEnabled) {
                 homingTargets.Remove(ent);
             }
         }
     }
     public HomingTarget GetNearest(Vector3 pos, Vector2 Direction, float MaxAngle) {
+        UpdateEntities();
         HomingTarget NearestEnt = null;
         float NearestDist = 9999f;
         foreach (HomingTarget ent in homingTargets) {

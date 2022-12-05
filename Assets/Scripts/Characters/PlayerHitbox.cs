@@ -7,16 +7,9 @@ public class PlayerHitbox : MonoBehaviour
     public Vector3 knockbackDir;
     public float knockbackForce;
     public PlayerController player;
+    public GameObject HitFX;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void PlayHitFX(Vector3 pos) {
+        Instantiate(HitFX, pos, Quaternion.identity);
     }
 }
