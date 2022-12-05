@@ -50,12 +50,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565cae55dd2693d468b8dd8ad924b150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
-  SubType: 0
-  Mode: 0
-  SubMode: 0
+  timeInMode: 0
   hurtbox: {fileID: 8630137056629906501}
   homingTarget: {fileID: 6209509049871359017}
+  ExplosionFX: {fileID: 6247232576998291287, guid: d94981180ee3a92478e2168c367a20da, type: 3}
 --- !u!54 &8630137055892583875
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -65,8 +63,8 @@ Rigidbody:
   m_GameObject: {fileID: 8630137055892583879}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 1
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0

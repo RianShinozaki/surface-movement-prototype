@@ -10,6 +10,6 @@ public class PlayerHitbox : MonoBehaviour
     public GameObject HitFX;
 
     public void PlayHitFX(Vector3 pos) {
-        Instantiate(HitFX, pos, Quaternion.identity);
+        ObjectPool.Instance.Spawn(HitFX, pos, Quaternion.identity);
     }
 }

@@ -9,6 +9,7 @@ public class BaseEnemy : AlkylEntity
     SphereCollider sColl;
     public GameObject hurtbox;
     public GameObject homingTarget;
+    public GameObject ExplosionFX;
 
     /*
      * Default modes:
@@ -25,7 +26,8 @@ public class BaseEnemy : AlkylEntity
     public override void Update() {
         base.Update();
         if(Mode == 4) {
-            if(timeInMode > 2) {
+            if(timeInMode > 0.7f) {
+                ObjectPool.Instance.Spawn(ExplosionFX, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
         }

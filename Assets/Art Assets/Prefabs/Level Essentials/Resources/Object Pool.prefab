@@ -49,3 +49,7 @@ MonoBehaviour:
     InitCount: 30
   - PoolObject: {fileID: 6382031716021596352, guid: 900f9e69483b64543b903e351ae0f960, type: 3}
     InitCount: 60
+  - PoolObject: {fileID: 4511283363642129121, guid: dba978f19d2984945baa9eeb0cd70c29, type: 3}
+    InitCount: 15
+  - PoolObject: {fileID: 6247232576998291287, guid: d94981180ee3a92478e2168c367a20da, type: 3}
+    InitCount: 15
