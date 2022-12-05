@@ -221,11 +221,13 @@ public class PlayerController : CustomPhysicsObject
                 verticalSpeed = totalSpd.y;
                 keepSpeedCache = false;
                 transform.LookAt(currentTarget.transform);
-
+                hitbox.SetActive(true);
                 timeInHoming += Time.deltaTime;
                 if(timeInHoming > maxHomingTime) {
                     CancelHoming();
+                    Homing(false);
                     movementType = MovementType.Momentum;
+                    hitbox.SetActive(false);
                 }
                 break;
         }
@@ -235,6 +237,9 @@ public class PlayerController : CustomPhysicsObject
         switch (movementType) {
             case MovementType.Momentum:
                 groundSpeed += new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * attackStruckTargetBoost;
+                if(!grounded) {
+                    verticalSpeed = homingHitBounce;
+                }
                 break;
             case MovementType.Homing:
                 transform.position = transform.position + transform.up;

@@ -9,11 +9,26 @@ public class BaseEnemy : AlkylEntity
     SphereCollider sColl;
     public GameObject hurtbox;
     public GameObject homingTarget;
+
+    /*
+     * Default modes:
+     * Mode 4 = defeated;
+     * 
+     */
+
     public override void Awake() {
         base.Awake();
         rb = GetComponent<Rigidbody>();
         phys = GetComponent<CustomPhysicsObject>();
         sColl = GetComponentInParent<SphereCollider>();
+    }
+    public override void Update() {
+        base.Update();
+        if(Mode == 4) {
+            if(timeInMode > 2) {
+                Destroy(gameObject);
+            }
+        }
     }
     public void OnHurt(PlayerController attacker, PlayerHitbox hb, Vector3 pos) {
         rb.useGravity = true;
@@ -36,5 +51,7 @@ public class BaseEnemy : AlkylEntity
         rb.AddForceAtPosition(hitDirection * hitForce, pos, ForceMode.Impulse);
         hurtbox.SetActive(false);
         homingTarget.SetActive(false);
+
+        Mode = 4;
     }
 }
