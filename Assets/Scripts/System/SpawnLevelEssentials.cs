@@ -8,7 +8,7 @@ public class LevelEssentialsList : ScriptableObject{
 }
 
 
-public class SpawnLevelEssentials {
+public static class SpawnLevelEssentials {
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void SpawnEssentials(){
