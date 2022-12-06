@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6096e0e007de0f43bb892b72006ee61, type: 3}
   m_Name: Essentials List
   m_EditorClassIdentifier: 
-  Essentials: []
+  Essentials:
+  - {fileID: 3156017931019964401, guid: 6dd1fbc00cea28e48aef9bd0a54f19bb, type: 3}
+  - {fileID: 8616471039765816521, guid: bc48055bd61647f439e5e70a13067dec, type: 3}
