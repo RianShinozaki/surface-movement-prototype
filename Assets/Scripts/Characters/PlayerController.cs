@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public enum MovementType {
-    Simple,
-    Momentum,
-    Homing
-}
 
+[RequireComponent(typeof(AlkylEntity))]
 public class PlayerController : CustomPhysicsObject
 {
     public static PlayerController Instance;
@@ -33,7 +29,6 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public float fastSpeedKeepCoefficient;        //How well you get to keep your speed if you're running faster than topspeed //NOT USED
     [FoldoutGroup("Movement Params")] public float fastSpeedDecel;                  //How fast you lose speed if past topspeed
     [FoldoutGroup("Movement Params")] public float jumpForce;
-    [FoldoutGroup("Movement Params")] public MovementType movementType;
     [FoldoutGroup("Movement Params")] public bool relativeToCamera = true;
     [FoldoutGroup("Movement Params")] public float homingSpeed;
     [FoldoutGroup("Movement Params")] public float maxHomingTime;
@@ -52,12 +47,13 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Variables")] public float attackCooldown;
     [FoldoutGroup("Movement Variables")] public float timeInHoming;
 
-    [FoldoutGroup("Components")] PolyAnimator animator;
-    [FoldoutGroup("Components")] PlayerHomingSensor homingSensor;
-    [FoldoutGroup("Components")] TrailRenderer trail;
+    [FoldoutGroup("Components")] public PolyAnimator animator;
+    [FoldoutGroup("Components")] public PlayerHomingSensor homingSensor;
+    [FoldoutGroup("Components")] public TrailRenderer trail;
     [FoldoutGroup("Components")] public UnityEngine.VFX.VisualEffect SpinVFX;
     [FoldoutGroup("Components")] public UnityEngine.VFX.VisualEffect HomingVFX;
     [FoldoutGroup("Components")] public GameObject hitbox;
+    [FoldoutGroup("Components")] public AlkylEntity ent;
 
     public virtual void Awake() {
         if (Instance) {
@@ -72,187 +68,109 @@ public class PlayerController : CustomPhysicsObject
 
 
     public virtual void Update() {
+        
+        switch (ent.Mode) {
+            case 0:
+                Mode0();
+                break;
+            case 1:
+                Mode1();
+                break;
+            case 2:
+                Mode2();
+                break;
+        }
+    }
+
+    public virtual void Mode0() {
+        #region debug  ground movement
         float inputMagnitude = Mathf.Clamp(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).magnitude, 0, 1);
-        switch (movementType) {
-            case MovementType.Simple:
-                
-                if (inputMagnitude > 0) {
-                    float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-                    float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
-                    flatDirection = correctedInputDirection;
-                    groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * 3;
-                }
-                else {
-                    groundSpeed = Vector2.zero;
-                }
-                if (grounded && Input.GetButtonDown("Fire1")) {
-                    grounded = false;
-                    verticalSpeed = 5;
-                }
-                break;
-
-            case MovementType.Momentum:
-
-                if (inputMagnitude > 0) {
-                    float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-                    float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
-
-                    Vector2 inputVec    = new Vector2(Mathf.Sin(correctedInputDirection) , Mathf.Cos(correctedInputDirection));
-
-                    if(currentPath != null) {
-                        float t = currentPath.myPath.path.GetClosestDistanceAlongPath(transform.position);
-                        Vector3 dirAlongPath = currentPath.myPath.path.GetDirectionAtDistance(t);
-                        Vector3 dirToPath = (currentPath.myPath.path.GetClosestPointOnPath(transform.position) - transform.position).normalized;
-                        float distTopath = (currentPath.myPath.path.GetClosestPointOnPath(transform.position) - transform.position).magnitude;
-                        float distToPathClamped = Mathf.Clamp(distTopath / currentPath.displacementDistMax, 0, 1);
-
-                        Vector3 moveDir = dirAlongPath * (1 - currentPath.displacementInfluenceFalloff.Evaluate(distToPathClamped)) + dirToPath * currentPath.displacementInfluenceFalloff.Evaluate(distToPathClamped);
-
-                        Quaternion rot = transform.rotation;
-                        transform.rotation = Quaternion.Euler(0, 0, 0);
-                        transform.rotation = Quaternion.FromToRotation(transform.up, upDirectionLast) * transform.rotation;
-                        Vector3 correctMoveDir = transform.InverseTransformDirection(moveDir);
-
-                        inputVec = Vector2.Lerp(inputVec, new Vector2(correctMoveDir.x, correctMoveDir.z).normalized, currentPath.pathInfluence);
-
-                        transform.rotation = rot;
-
-
-                    }
-
-                    if(grounded && Speed < 2) {
-                        groundSpeed = inputVec * startSpeed;
-                    }
-
-                    if (!grounded || ( !(Speed > haltSpeed && Mathf.Abs(Vector2.Angle(groundSpeed, inputVec)) > haltAngle))) {
-                        float steer = Speed * (grounded ? steeringCoefficient : steeringCoefficientinAir) * Mathf.Sin(Mathf.Deg2Rad * Vector2.Angle(groundSpeed, inputVec));
-                        //Debug.Log(steer);
-                        float accelForce = (grounded ? (Speed < accelSpeedLowSpdThresh ? accelSpeedLowSpd : accelSpeed) : accelSpeedinAir);
-                        float accelCap = fastSpeedDecel - 1;
-                        float accelTotal = Mathf.Clamp((steer + accelForce), 0, accelCap);
-                        groundSpeed = Vector2.MoveTowards(groundSpeed, inputVec * 999, accelTotal * Time.deltaTime);
-                    }
-                    else {
-                        groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, haltAccel * Time.deltaTime);
-                    }
-
-                    if(Speed > topSpeed) {
-                        groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, fastSpeedDecel * Time.deltaTime);
-
-                    }
-
-                    if (grounded)
-                        flatDirection = Mathf.Atan2(groundSpeed.x, groundSpeed.y);
-                    else {
-                        flatDirection = Mathf.LerpAngle(flatDirection * Mathf.Rad2Deg, correctedInputDirection * Mathf.Rad2Deg, 20 * Time.deltaTime) * Mathf.Deg2Rad;
-                    }
-                }
-                else {
-                    groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, (grounded ? (Speed < 2 ? decelSpeedLowSpd : decelSpeed) : decelSpeedinAir ) * Time.deltaTime);
-                }
-                
-                if (grounded && Input.GetKeyDown(KeyCode.Space)) {
-                    grounded = false;
-                    
-                    Vector3 jumpVector = new Vector3(Vector3.Dot(upDirection, Vector3.right), Vector3.Dot(upDirection, Vector3.up), Vector3.Dot(upDirection, Vector3.forward));
-                    groundSpeed = new Vector2(jumpVector.x, jumpVector.z) * jumpForce;
-                    verticalSpeed = jumpVector.y * jumpForce;
-                    keepSpeedCache = true;
-                    animator.Jump();
-                }
-
-                if (Input.GetMouseButtonDown(1)) {
-                    groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * boostSpeed;
-                }
-
-                HomingVFX.Stop();
-                if (Input.GetKey(KeyCode.LeftShift)) { 
-                    //These get components are temp for testing until you unhook all this
-                    if (GetComponent<PolyHomingSystem>().HasTarget) {
-                        Transform nearestTarget = GetComponent<PolyHomingSystem>().ActiveTarget;
-                        if (Input.GetMouseButtonDown(0)) {
-                            movementType = MovementType.Homing;
-                            timeInHoming = 0;
-                            currentTarget = nearestTarget;
-                            hitbox.SetActive(true);
-                            Homing(true);
-                            HomingVFX.Play();
-                            break;
-                        }
-                    }
-                }
-
-                if (grounded)
-                    canAirAttackBoost = true;
-
-                if (attackCooldown != 0)
-                    attackCooldown = Mathf.MoveTowards(attackCooldown, 0, Time.deltaTime);
-                else {
-                    SpinVFX.Stop();
-                    hitbox.SetActive(false);
-                    if (Input.GetMouseButtonDown(0)) {
-                        if (!grounded && canAirAttackBoost) {
-                            canAirAttackBoost = false;
-                            verticalSpeed = attackVertBoost;
-                        }
-                        if(grounded) {
-                            groundSpeed += new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * attackSpeedBoost;
-                        }
-                        SpinVFX.Play();
-                        Attack();
-                        hitbox.SetActive(true);
-                        attackCooldown = attackCooldownMax;
-                    }
-                }
-                trail.startColor = Color.Lerp(trail.startColor, new Color(1, 1, 1, Mathf.Clamp( ((Speed-30)/60) , 0, 1)), Time.deltaTime * 4);
-
-                break;
-            case MovementType.Homing:
-                trail.startColor = new Color(1, 1, 1, 1);
-                trail.endColor = new Color(1, 1, 1, 0);
-                Vector3 totalSpd = (currentTarget.transform.position - transform.position).normalized * homingSpeed;
-                grounded = false;
-                upDirectionLast = Vector3.up;
-                groundedLast = false;
-                groundSpeed = new Vector2(totalSpd.x, totalSpd.z);
-                verticalSpeed = totalSpd.y;
-                keepSpeedCache = false;
-                transform.LookAt(currentTarget.transform);
-                hitbox.SetActive(true);
-                timeInHoming += Time.deltaTime;
-                if(timeInHoming > maxHomingTime) {
-                    CancelHoming();
-                    Homing(false);
-                    movementType = MovementType.Momentum;
-                    hitbox.SetActive(false);
-                }
-                break;
+        if (inputMagnitude > 0) {
+            float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
+            flatDirection = correctedInputDirection;
+            groundSpeed = new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * 3;
         }
+        else {
+            groundSpeed = Vector2.zero;
+        }
+        if (grounded && Input.GetButtonDown("Fire1")) {
+            grounded = false;
+            verticalSpeed = 5;
+        }
+        #endregion
     }
 
-    public void OnStruckTarget(BaseEnemy ent) {
-        switch (movementType) {
-            case MovementType.Momentum:
-                groundSpeed += new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * attackStruckTargetBoost;
-                if(!grounded) {
-                    verticalSpeed = homingHitBounce;
-                }
-                break;
-            case MovementType.Homing:
-                transform.position = transform.position + transform.up;
-                grounded = false;
-                upDirectionLast = Vector3.up;
-                groundedLast = false;
-                groundSpeed = Vector2.zero;
-                keepSpeedCache = true;
-                verticalSpeed = homingHitBounce;
-                movementType = MovementType.Momentum;
-                canAirAttackBoost = true;
-                hitbox.SetActive(false);
-                Homing(false);
-                break;
+    public virtual void Mode1() {
+        #region momentum-based ground movement
+        
+
+        float inputMagnitude = Mathf.Clamp(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).magnitude, 0, 1);
+        
+        if (inputMagnitude > 0) {
+            float inputDirection = Mathf.Atan2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            float correctedInputDirection = inputDirection + Mathf.Deg2Rad * cam.transform.localRotation.eulerAngles.y;
+
+            Vector2 inputVec = new Vector2(Mathf.Sin(correctedInputDirection), Mathf.Cos(correctedInputDirection));
+
+            if (currentPath != null) {
+                float t = currentPath.myPath.path.GetClosestDistanceAlongPath(transform.position);
+                Vector3 dirAlongPath = currentPath.myPath.path.GetDirectionAtDistance(t);
+                Vector3 dirToPath = (currentPath.myPath.path.GetClosestPointOnPath(transform.position) - transform.position).normalized;
+                float distTopath = (currentPath.myPath.path.GetClosestPointOnPath(transform.position) - transform.position).magnitude;
+                float distToPathClamped = Mathf.Clamp(distTopath / currentPath.displacementDistMax, 0, 1);
+
+                Vector3 moveDir = dirAlongPath * (1 - currentPath.displacementInfluenceFalloff.Evaluate(distToPathClamped)) + dirToPath * currentPath.displacementInfluenceFalloff.Evaluate(distToPathClamped);
+
+                Quaternion rot = transform.rotation;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.rotation = Quaternion.FromToRotation(transform.up, upDirectionLast) * transform.rotation;
+                Vector3 correctMoveDir = transform.InverseTransformDirection(moveDir);
+
+                inputVec = Vector2.Lerp(inputVec, new Vector2(correctMoveDir.x, correctMoveDir.z).normalized, currentPath.pathInfluence);
+
+                transform.rotation = rot;
+
+
+            }
+
+            if (grounded && Speed < 2) {
+                groundSpeed = inputVec * startSpeed;
+            }
+
+            if (!grounded || (!(Speed > haltSpeed && Mathf.Abs(Vector2.Angle(groundSpeed, inputVec)) > haltAngle))) {
+                float steer = Speed * (grounded ? steeringCoefficient : steeringCoefficientinAir) * Mathf.Sin(Mathf.Deg2Rad * Vector2.Angle(groundSpeed, inputVec));
+                //Debug.Log(steer);
+                float accelForce = (grounded ? (Speed < accelSpeedLowSpdThresh ? accelSpeedLowSpd : accelSpeed) : accelSpeedinAir);
+                float accelCap = fastSpeedDecel - 1;
+                float accelTotal = Mathf.Clamp((steer + accelForce), 0, accelCap);
+                groundSpeed = Vector2.MoveTowards(groundSpeed, inputVec * 999, accelTotal * Time.deltaTime);
+            }
+            else {
+                groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, haltAccel * Time.deltaTime);
+            }
+
+            if (Speed > topSpeed) {
+                groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, fastSpeedDecel * Time.deltaTime);
+
+            }
+
+            if (grounded)
+                flatDirection = Mathf.Atan2(groundSpeed.x, groundSpeed.y);
+            else {
+                flatDirection = Mathf.LerpAngle(flatDirection * Mathf.Rad2Deg, correctedInputDirection * Mathf.Rad2Deg, 20 * Time.deltaTime) * Mathf.Deg2Rad;
+            }
         }
+        else {
+            groundSpeed = Vector2.MoveTowards(groundSpeed, Vector2.zero, (grounded ? (Speed < 2 ? decelSpeedLowSpd : decelSpeed) : decelSpeedinAir) * Time.deltaTime);
+        }
+        trail.startColor = Color.Lerp(trail.startColor, new Color(1, 1, 1, Mathf.Clamp(((Speed - 30) / 60), 0, 1)), Time.deltaTime * 4);
+        #endregion
     }
+
+    public virtual void Mode2() {}
+
+    public virtual void OnStruckTarget(BaseEnemy ent) {}
 
     public override void OnDrawGizmos() {
         if(currentPath != null) {
@@ -277,9 +195,7 @@ public class PlayerController : CustomPhysicsObject
     }
 
     public void Spring() => animator.Spring();
-    public void Attack() => animator.Attack();
-    public void Homing(bool set) => animator.Homing(set);
-    public void CancelHoming() => animator.CancelHoming();
+    
 
     public void SetRelativeCameraMovement(bool set) {
         relativeToCamera = set;

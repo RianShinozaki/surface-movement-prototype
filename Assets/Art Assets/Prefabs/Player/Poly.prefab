@@ -582,9 +582,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8367614548818735127}
   - component: {fileID: 8367614548818735131}
-  - component: {fileID: 8367614548818735126}
   - component: {fileID: 8367614548818735121}
-  - component: {fileID: 8367614548818735120}
+  - component: {fileID: 1787837628881324444}
+  - component: {fileID: 785196338560759655}
+  - component: {fileID: 222125542367190870}
   m_Layer: 6
   m_Name: Poly
   m_TagString: Untagged
@@ -629,7 +630,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8367614548818735126
+--- !u!135 &8367614548818735121
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8367614548818735128}
+  m_Material: {fileID: 13400000, guid: 1796e1e450dad0244894daf2d3955a0e, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1787837628881324444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -638,7 +652,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8367614548818735128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b817c01e31861d48a51d0f57a27ac89, type: 3}
+  m_Script: {fileID: 11500000, guid: 821913d4fec69f24984560509da3c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DotLimit: 0
+  ReticleAnimationTime: 0
+  possibleTargets: []
+--- !u!114 &785196338560759655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8367614548818735128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd01f5fbe364e7f46b88f93c385255d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8367614548818735131}
@@ -657,24 +686,24 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 8
-  grounded: 1
-  groundedLast: 1
+  grounded: 0
+  groundedLast: 0
   groundSpeed: {x: 0, y: 0}
   groundSpeedLast: {x: 0, y: 0}
   verticalSpeed: 0
   verticalSpeedLast: 0
   worldSpeed: {x: 0, y: 0, z: 0}
   flatDirection: 0
-  upDirection: {x: 0, y: 1, z: 0}
-  upDirectionLast: {x: 0, y: 1, z: 0}
+  upDirection: {x: 0, y: 0, z: 0}
+  upDirectionLast: {x: 0, y: 0, z: 0}
   groundSlopeAngle: 0
   groundSlopePoint: 0
-  groundSlopeDir: {x: 0, y: -0, z: 0}
+  groundSlopeDir: {x: 0, y: 0, z: 0}
   keepSpeedCache: 0
-  visualRotation: {x: 0, y: 0, z: 0, w: 1}
+  visualRotation: {x: 0, y: 0, z: 0, w: 0}
   topSpeed: 13
   startSpeed: 4
-  boostSpeed: 25
+  boostSpeed: 30
   accelSpeed: 50
   accelSpeedLowSpdThresh: 15
   accelSpeedLowSpd: 30
@@ -701,26 +730,13 @@ MonoBehaviour:
   attackVertBoost: 2
   attackCooldownMax: 0.5
   currentTarget: {fileID: 0}
-  canAirAttackBoost: 1
+  canAirAttackBoost: 0
   attackCooldown: 0
   timeInHoming: 0
   SpinVFX: {fileID: 1483536442}
   HomingVFX: {fileID: 1924367942628995308}
   hitbox: {fileID: 891220367}
---- !u!135 &8367614548818735121
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8367614548818735128}
-  m_Material: {fileID: 13400000, guid: 1796e1e450dad0244894daf2d3955a0e, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &8367614548818735120
+--- !u!114 &222125542367190870
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

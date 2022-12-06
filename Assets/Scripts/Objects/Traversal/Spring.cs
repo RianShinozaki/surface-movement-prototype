@@ -21,10 +21,9 @@ public class Spring : MonoBehaviour
             player.groundSpeed = new Vector2(transform.up.x, transform.up.z) * springPower;
             player.keepSpeedCache = true;
             player.verticalSpeed = transform.up.y * springPower;
-            player.movementType = MovementType.Momentum;
+            player.ent.Mode = 1;
             player.canAirAttackBoost = true;
             anim.SetTrigger("Bounce");
-            player.Homing(false);
             player.Spring();
         }
     }

@@ -2766,7 +2766,7 @@ MonoBehaviour:
         _Z: 0
         _W: 0
         _Object: {fileID: 0}
-    - _Target: {fileID: 1948979707}
+    - _Target: {fileID: 0}
       _MethodName: SetInputPath
       _PersistentArguments:
       - _Type: 13
@@ -2792,7 +2792,7 @@ MonoBehaviour:
         _Z: 0
         _W: 0
         _Object: {fileID: 0}
-    - _Target: {fileID: 1948979707}
+    - _Target: {fileID: 0}
       _MethodName: UnsetInputPath
       _PersistentArguments:
       - _Type: 13
@@ -4660,7 +4660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TriggerEnterEvent:
     _PersistentCalls:
-    - _Target: {fileID: 1948979707}
+    - _Target: {fileID: 0}
       _MethodName: SetInputPath
       _PersistentArguments:
       - _Type: 13
@@ -4675,7 +4675,7 @@ MonoBehaviour:
     _PersistentCalls: []
   _TriggerExitEvent:
     _PersistentCalls:
-    - _Target: {fileID: 1948979707}
+    - _Target: {fileID: 0}
       _MethodName: UnsetInputPath
       _PersistentArguments:
       - _Type: 13
@@ -6828,11 +6828,6 @@ Transform:
   m_Father: {fileID: 901871170}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1219943515 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 1164161875854015600, guid: 4b75a7cf783258c4cb5346fab047fe80, type: 3}
-  m_PrefabInstance: {fileID: 1164161874655338539}
-  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1264840030
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14004,17 +13999,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8367614548818735127, guid: f816b8abf6b29884d9144998ce3c3d06, type: 3}
   m_PrefabInstance: {fileID: 8367614549017240045}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1948979707 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8367614548818735126, guid: f816b8abf6b29884d9144998ce3c3d06, type: 3}
-  m_PrefabInstance: {fileID: 8367614549017240045}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b817c01e31861d48a51d0f57a27ac89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1963087398
 GameObject:
   m_ObjectHideFlags: 0
@@ -15174,7 +15158,7 @@ MonoBehaviour:
         _Z: 0
         _W: 0
         _Object: {fileID: 0}
-    - _Target: {fileID: 1948979707}
+    - _Target: {fileID: 0}
       _MethodName: SetRelativeCameraMovement
       _PersistentArguments:
       - _Type: 1
@@ -15200,7 +15184,7 @@ MonoBehaviour:
         _Z: 0
         _W: 0
         _Object: {fileID: 0}
-    - _Target: {fileID: 1948979707}
+    - _Target: {fileID: 0}
       _MethodName: SetRelativeCameraMovement
       _PersistentArguments:
       - _Type: 1
@@ -15992,10 +15976,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8367614548818735126, guid: f816b8abf6b29884d9144998ce3c3d06, type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 1219943515}
     - target: {fileID: 8367614548818735127, guid: f816b8abf6b29884d9144998ce3c3d06, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -16197,15 +16177,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8650735405691320200, guid: 9c95bd828e978a3409548c808479e253, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.24393934
+      value: -0.24393931
       objectReference: {fileID: 0}
     - target: {fileID: 8650735405691320200, guid: 9c95bd828e978a3409548c808479e253, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.034885593
+      value: -0.034885585
       objectReference: {fileID: 0}
     - target: {fileID: 8650735405691320200, guid: 9c95bd828e978a3409548c808479e253, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.1372034
+      value: -0.13720338
       objectReference: {fileID: 0}
     - target: {fileID: 8650735407283734016, guid: 9c95bd828e978a3409548c808479e253, type: 3}
       propertyPath: m_Follow
