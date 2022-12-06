@@ -42,7 +42,7 @@ public class Poly : PlayerController {
             if (GetComponent<PolyHomingSystem>().HasTarget) {
                 Transform nearestTarget = GetComponent<PolyHomingSystem>().ActiveTarget;
                 if (Input.GetMouseButtonDown(0)) {
-                    ent.Mode = 1;
+                    ent.Mode = 2;
                     timeInHoming = 0;
                     currentTarget = nearestTarget;
                     hitbox.SetActive(true);
