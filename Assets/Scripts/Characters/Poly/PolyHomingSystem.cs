@@ -28,7 +28,7 @@ public class PolyHomingSystem : MonoBehaviour {
 
     void Awake() {
         cam = Camera.main;
-        targetRect = Instantiate(Resources.Load<GameObject>("Characters/Poly/Homing Recticle")).transform.GetChild(0).GetComponent<RectTransform>();
+        targetRect = Instantiate(Resources.Load<GameObject>("Homing Reticle")).transform.GetChild(0).GetComponent<RectTransform>();
     }
 
     void Update(){

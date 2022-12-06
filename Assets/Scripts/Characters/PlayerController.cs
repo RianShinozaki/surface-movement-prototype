@@ -64,6 +64,8 @@ public class PlayerController : CustomPhysicsObject
         animator = GetComponent<PolyAnimator>();
         homingSensor = GetComponentInChildren<PlayerHomingSensor>();
         trail = GetComponentInChildren<TrailRenderer>();
+        ent = GetComponent<AlkylEntity>();
+        ent.Mode = 1;
     }
 
 
