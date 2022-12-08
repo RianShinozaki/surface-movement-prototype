@@ -41,8 +41,6 @@ public class PlayerController : CustomPhysicsObject
     [FoldoutGroup("Movement Params")] public float attackCooldownMax;
 
     #endregion
-
-    [FoldoutGroup("Movement Variables")] public Transform currentTarget;
     [FoldoutGroup("Movement Variables")] public bool canAirAttackBoost;
     [FoldoutGroup("Movement Variables")] public float attackCooldown;
     [FoldoutGroup("Movement Variables")] public float timeInHoming;

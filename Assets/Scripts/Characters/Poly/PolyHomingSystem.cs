@@ -5,40 +5,30 @@ using UnityEngine;
 public class PolyHomingSystem : MonoBehaviour {
     public float DotLimit;
     public float ReticleAnimationTime;
+    
+    [HideInInspector]
+    public RectTransform TargetRect;
 
     [HideInInspector]
-    public List<Transform> possibleTargets = new List<Transform>();
+    public List<HomingTarget> possibleTargets = new List<HomingTarget>();
     public bool HasTarget => ActiveTarget;
-    public Transform ActiveTarget{
-        get{
-            return target;
-        }
-        set{
-            if(value != null && value != target){
-                ReticleAnimation();
-            }
-            targetRect.gameObject.SetActive(value != null);
-            target = value;
-        }
-    }
-    Transform target;
-    RectTransform targetRect;
+    public HomingTarget ActiveTarget;
     LTDescr reticleTween;
     Camera cam;
 
     void Awake() {
         cam = Camera.main;
-        targetRect = Instantiate(Resources.Load<GameObject>("Homing Reticle")).transform.GetChild(0).GetComponent<RectTransform>();
+        TargetRect = Instantiate(Resources.Load<GameObject>("Homing Reticle")).transform.GetChild(0).GetComponent<RectTransform>();
     }
 
-    void Update(){
+    void Update() {
         //Check for positive target hits
         //This fucking AI chat bot has got me feeling bad about not commenting code
         float lastDot = 0f;
         int lastDotIndex = -1;
 
         for(int i = 0; i < possibleTargets.Count; i++){
-            float dot = GameMath.Dot01(transform.forward, (possibleTargets[i].position - transform.position).normalized);
+            float dot = GameMath.Dot01(transform.forward, (possibleTargets[i].transform.position - transform.position).normalized);
             if(dot > lastDot){
                 lastDot = dot;
                 lastDotIndex = i;
@@ -58,15 +48,15 @@ public class PolyHomingSystem : MonoBehaviour {
         UpdateTarget();
     }
 
-    void ReticleAnimation(){
+    public void ReticleAnimation(){
         if(reticleTween != null){
             LeanTween.cancel(reticleTween.id);
         }
 
         reticleTween = LeanTween.value(0f, 1f, ReticleAnimationTime).setOnUpdate((float val) => {
-            targetRect.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, val);
+            TargetRect.localScale = Vector3.LerpUnclamped(Vector3.zero, Vector3.one, val);
         }).setOnComplete(() => {
-            targetRect.localScale = Vector3.one;
+            TargetRect.localScale = Vector3.one;
             reticleTween = null;
         }).setEaseOutBack();
     }
@@ -75,7 +65,7 @@ public class PolyHomingSystem : MonoBehaviour {
         if(!ActiveTarget){
             return;
         }
-        Vector2 position = cam.WorldToScreenPoint(ActiveTarget.position);
-        targetRect.anchoredPosition = position;
+        Vector2 position = cam.WorldToScreenPoint(ActiveTarget.transform.position + ActiveTarget.Offset);
+        TargetRect.position = position;
     }
 }

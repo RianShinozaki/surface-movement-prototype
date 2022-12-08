@@ -208,6 +208,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8630137055892583878}
     m_Modifications:
+    - target: {fileID: 4542923534171599470, guid: 955a73261316a504eb6ceb44bc0b17de, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6810849732398881898, guid: 955a73261316a504eb6ceb44bc0b17de, type: 3}
+      propertyPath: Offset.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7263637402169341086, guid: 955a73261316a504eb6ceb44bc0b17de, type: 3}
       propertyPath: m_Name
       value: HomingTarget

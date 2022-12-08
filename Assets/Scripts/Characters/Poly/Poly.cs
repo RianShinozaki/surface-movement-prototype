@@ -37,20 +37,22 @@ public class Poly : PlayerController {
 
         #region attack
         HomingVFX.Stop();
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            //These get components are temp for testing until you unhook all this
-            if (GetComponent<PolyHomingSystem>().HasTarget) {
-                Transform nearestTarget = GetComponent<PolyHomingSystem>().ActiveTarget;
-                if (Input.GetMouseButtonDown(0)) {
-                    ent.Mode = 2;
-                    timeInHoming = 0;
-                    currentTarget = nearestTarget;
-                    hitbox.SetActive(true);
-                    Homing(true);
-                    HomingVFX.Play();
-                    return;
-                }
+        if(Input.GetKeyDown(KeyCode.LeftShift) && system.HasTarget){
+            system.TargetRect.gameObject.SetActive(true);
+            system.ReticleAnimation();
+        }
+        
+        if (Input.GetKey(KeyCode.LeftShift) && system.HasTarget) {
+            if (Input.GetMouseButtonDown(0)) {
+                ent.Mode = 2;
+                timeInHoming = 0;
+                hitbox.SetActive(true);
+                Homing(true);
+                HomingVFX.Play();
+                return;
             }
+        }else{
+            system.TargetRect.gameObject.SetActive(false);
         }
 
         if (grounded)
@@ -82,14 +84,14 @@ public class Poly : PlayerController {
         base.Mode2();
         trail.startColor = new Color(1, 1, 1, 1);
         trail.endColor = new Color(1, 1, 1, 0);
-        Vector3 totalSpd = (currentTarget.transform.position - transform.position).normalized * homingSpeed;
+        Vector3 totalSpd = (system.ActiveTarget.transform.position - transform.position).normalized * homingSpeed;
         grounded = false;
         upDirectionLast = Vector3.up;
         groundedLast = false;
         groundSpeed = new Vector2(totalSpd.x, totalSpd.z);
         verticalSpeed = totalSpd.y;
         keepSpeedCache = false;
-        transform.LookAt(currentTarget.transform);
+        transform.LookAt(system.ActiveTarget.transform);
         hitbox.SetActive(true);
         if (ent.timeInMode > maxHomingTime) {
             CancelHoming();
