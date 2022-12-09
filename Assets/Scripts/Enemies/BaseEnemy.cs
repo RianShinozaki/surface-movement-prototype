@@ -52,7 +52,7 @@ public class BaseEnemy : AlkylEntity
 
         rb.AddForceAtPosition(hitDirection * hitForce, pos, ForceMode.Impulse);
         hurtbox.SetActive(false);
-        homingTarget.SetActive(false);
+        Destroy(homingTarget);
 
         Mode = 4;
     }

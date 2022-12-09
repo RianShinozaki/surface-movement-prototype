@@ -29,6 +29,7 @@ public class HomingTarget : MonoBehaviour {
         if(!homingSystem){
             return;
         }
+        Debug.Log("Exit from homing");
         homingSystem.possibleTargets.Remove(this);
     }
 
@@ -36,6 +37,7 @@ public class HomingTarget : MonoBehaviour {
         if(!homingSystem){
             return;
         }
+        Debug.Log("Homing destroyed");
         homingSystem.possibleTargets.Remove(this);
         homingSystem.ActiveTarget = null;
     }
