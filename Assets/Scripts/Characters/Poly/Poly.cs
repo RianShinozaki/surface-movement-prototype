@@ -37,9 +37,10 @@ public class Poly : PlayerController {
 
         #region attack
         HomingVFX.Stop();
-        if(Input.GetKeyDown(KeyCode.LeftShift) && system.HasTarget){
+        if(Input.GetKey(KeyCode.LeftShift) && system.HasTarget){
             system.TargetRect.gameObject.SetActive(true);
-            system.ReticleAnimation();
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+                system.ReticleAnimation();
         }
         
         if (Input.GetKey(KeyCode.LeftShift) && system.HasTarget) {
@@ -101,7 +102,7 @@ public class Poly : PlayerController {
         }
     }
 
-    public override void OnStruckTarget(BaseEnemy ent) {
+    public override void OnStruckTarget(BaseEnemy enemy) {
         switch (ent.Mode) {
             case 1:
                 groundSpeed += new Vector2(Mathf.Sin(flatDirection), Mathf.Cos(flatDirection)) * attackStruckTargetBoost;
