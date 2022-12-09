@@ -64,6 +64,10 @@ public class PlayerController : CustomPhysicsObject
         trail = GetComponentInChildren<TrailRenderer>();
         ent = GetComponent<AlkylEntity>();
         ent.Mode = 1;
+        Instantiate(Resources.Load<GameObject>("Player UI"));
+        for(int i = 0; i < HealthUI.Instance.MaxPips; i++){
+            HealthUI.Instance.AddPip();
+        }
     }
 
 
